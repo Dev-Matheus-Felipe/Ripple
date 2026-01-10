@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme{
+  --breakpoint-sidebar: 1030px;
+  --breakpoint-profile: 469px;
+}
+
+@theme inline {
+
+}
+
+
+:root{
+
+}
+
+
+
+/* --------------------------------------- DARK THEME --------------------------------------- */
+
+.dark{
+  
+}
+
+/* --------------------------------------- LIGHT THEME --------------------------------------- */
+
+.light{
+
+}
+
+
+
+
+/* --------------------------------------- SCROLL --------------------------------------- */
+
+
+::-webkit-scrollbar {
+  width: 8px;          /* largura da barra */
+  height: 8px;         /* altura da barra horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;  /* track transparente */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* cor do dedinho */
+  border-radius: 9999px;     /* deixar arredondado */
+  border: 2px solid transparent; /* margem interna opcional */
+}
+
