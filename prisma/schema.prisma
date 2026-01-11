@@ -9,13 +9,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model PendingUser {
+  id        String   @id @default(cuid()) @map("_id")
+
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  code      String
+  name      String
+  email     String @unique 
+  password  String
+  attempts  Int
+}
+
+
+
 model User {
   id        String   @id @default(cuid()) @map("_id")
   name      String?
 
   username  String? @unique
-  
   email     String?  @unique
+  password  String?
   image     String?
   bio String?
 
@@ -25,12 +40,37 @@ model User {
   createdResume String?
 
   bannedAt DateTime?
+
+  accounts Account[]
+
+  sessions Session[]
 }
 
-model PendingUser {
-  id        String   @id @default(cuid()) @map("_id")
+model Account {
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
 
-  createdAt DateTime @default(now())
-  email     String @unique 
+  access_token      String?
+  refresh_token     String? 
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
