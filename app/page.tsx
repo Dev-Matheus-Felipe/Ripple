@@ -1,6 +1,9 @@
+"use client"
 
-export default async function Home() {
+export default  function Home() {
+
+  
   return (
-    <p>HOME</p>
+    <button >Click me</button>
   );
 }
