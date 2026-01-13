@@ -9,6 +9,11 @@
 
 }
 
+body{
+  background-color: var(--primary-background);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 
 :root{
 
@@ -19,13 +24,17 @@
 /* --------------------------------------- DARK THEME --------------------------------------- */
 
 .dark{
-
+  --primary-color: rgb(169, 169, 169);
+  --primary-background: rgb(12, 16, 20);
+  --button-hover: #1c1e21;
 }
 
 /* --------------------------------------- LIGHT THEME --------------------------------------- */
 
 .light{
-  
+  --primary-color: rgb(0, 0, 0);
+  --primary-background: rgb(255, 255, 255);
+  --button-hover: #ccc;
 }
 
 

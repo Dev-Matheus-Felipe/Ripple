@@ -1,5 +1,6 @@
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
+import { Sidebar } from "@/components/sidebar/sidebar";
 
 export default function RootLayout({
   children,
