@@ -1,11 +1,17 @@
+import { PostContext } from "@/components/contexts/createPost";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import React from "react";
 
 export default function MainLayout({children} : {children: React.ReactNode}){
     return (
-        <div className="flex relative">
-            <Sidebar />
-            {children}
-        </div>
+        <PostContext>
+            <div className="flex relative">
+                <Sidebar />
+
+                <div className="p-[2%] z-1">
+                    {children}
+                </div>
+            </div>
+        </PostContext>
     )
 }

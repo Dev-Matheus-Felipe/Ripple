@@ -11,7 +11,7 @@
 
 body{
   background-color: var(--primary-background);
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 
@@ -24,9 +24,16 @@ body{
 /* --------------------------------------- DARK THEME --------------------------------------- */
 
 .dark{
-  --primary-color: rgb(169, 169, 169);
+  --primary-color: rgb(171, 171, 171);
   --primary-background: rgb(12, 16, 20);
   --button-hover: #1c1e21;
+
+  --secondary-button: #25292E;
+  --third-button: #555;
+  
+  --modal-post-title: #0c1014;
+  --modal-post-background: #1b1e21;
+  --modal-border-b: #343434;
 }
 
 /* --------------------------------------- LIGHT THEME --------------------------------------- */
@@ -35,6 +42,13 @@ body{
   --primary-color: rgb(0, 0, 0);
   --primary-background: rgb(255, 255, 255);
   --button-hover: #ccc;
+
+  --secondary-button: rgb(227, 227, 227);
+  --third-button: rgb(210, 210, 210);
+
+  --modal-post-title: #ffffff;
+  --modal-post-background: rgb(255, 255, 255);
+  --modal-border-b: #2a2a2a;
 }
 
 

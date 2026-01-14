@@ -25,11 +25,11 @@ model PendingUser {
 
 
 model User {
-  id        String   @id @default(cuid()) @map("_id")
+  id        String  @id @default(cuid()) @map("_id")
   name      String?
 
   username  String? @unique
-  email     String?  @unique
+  email     String? @unique
   password  String?
   image     String?
   bio String?
@@ -44,7 +44,87 @@ model User {
   accounts Account[]
 
   sessions Session[]
+
+  posts Post[]
+  responses Response[]
+
+  messagesSent Message[]
+
+  conversationsA Conversation[] @relation("UserAConversations")
+  conversationsB Conversation[] @relation("UserBConversations")
+
+  followers String[]
+  following String[]
 }
+
+model Post {
+  id          String   @id @default(cuid()) @map("_id")
+  description String     
+  visual      String  
+  tags        String[]
+
+  createdAt   DateTime @default(now())
+  
+  authorId    String
+
+  likes       Int?    
+
+  author      User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  responses   Response[]          
+}
+
+
+model Response {
+  id        String   @id @default(cuid()) @map("_id")
+  content   String
+
+  createdAt DateTime @default(now())
+
+  likes     Int?
+  postId    String
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+
+
+model Conversation {
+  id        String   @id @default(cuid()) @map("_id")
+
+  userAId   String
+  userBId   String
+
+  createdAt DateTime @default(now())
+
+  userA User @relation("UserAConversations", fields: [userAId], references: [id], onDelete: Cascade)
+  userB User @relation("UserBConversations", fields: [userBId], references: [id], onDelete: Cascade)
+
+  messages Message[]
+
+  @@unique([userAId, userBId])
+}
+
+
+
+model Message {
+  id             String   @id @default(cuid()) @map("_id")
+
+  content        String
+  createdAt      DateTime @default(now())
+  editedAt       DateTime?
+
+  conversationId String
+  senderId       String
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User        @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+
+
 
 model Account {
   id                String  @id @default(cuid()) @map("_id")
