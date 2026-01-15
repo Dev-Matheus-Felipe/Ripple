@@ -8,6 +8,10 @@ export const PostSchema = z.object({
         .regex(/^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$/,"Invalidated description"),
         
     tags: z
-        .array(z.string().regex(/^[a-zA-Z]+(-[a-zA-Z])*$/))
-        .min(1, "Min 1 tag"),
+        .array( z
+            .string()
+            .regex(/^[a-zA-Z0-9]{3,10}(-[a-zA-Z0-9]{3,10})?$/, "Invalid tag format")
+        )
+        .min(1, "Min 1 tag")
+        .max(3, "Max 3 tags"),
 })

@@ -1,9 +1,13 @@
-export default  function Home() {
-  
+import { PostContainer } from "@/components/postComponent/postContainer";
+import { GetPosts } from "@/lib/actions/getPosts/getPosts";
+
+export default async function Home() {
+  const initialPosts = await GetPosts();
   
   return (
-    <>
-     HOME PAGE
-    </>
+    <div className="w-full h-full overflow-auto p-[1%] flex">
+      <PostContainer initialPosts={initialPosts} />
+      <div className="w-150 h-150" />
+    </div>
   );
 }

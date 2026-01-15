@@ -1,8 +1,6 @@
 "use client"
 
-import { Register } from "@/lib/actions/register/register";
 import { ResgisterCode } from "@/lib/actions/register/registerCode";
-import { sign } from "crypto";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
 

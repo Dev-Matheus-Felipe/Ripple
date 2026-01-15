@@ -29,7 +29,7 @@ export function Sidebar(){
 
     if(!mounted) return null;
 
-    const linkStles = (link: string) => `${pathname === link ? "font-bold" : "text-(--primary-color) font-medium"}`;
+    const linkStles = (link: string) => `${pathname === link ? "font-bold" : "text-(--primary-color) font-medium"} `;
 
     const container_button = (selected?: string ) => `p-2 rounded-md cursor-pointer 
         ${isPop.some(e => e === popUp) && "hover:bg-(--button-hover)"} ${selected === popUp && "bg-(--button-hover)"} `;
@@ -41,7 +41,7 @@ export function Sidebar(){
 
     return (
         <div className="w-60 flex z-10">
-            <div className={`flex flex-col justify-between h-screen items-center pt-10 pb-5 duration-500 border-[#363636] z-10
+            <div className={`flex flex-col justify-between h-screen items-center pt-10 pb-5 duration-400 border-[#363636] z-10
             ${!isPop.some(e => e === popUp) ? "w-60 border-r" : "w-17"} bg-(--primary-background)`}>
 
                 <div className="w-[88%] h-[80%] flex flex-col gap-8 overflow-hidden font-medium">

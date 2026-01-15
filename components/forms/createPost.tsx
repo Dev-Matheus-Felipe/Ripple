@@ -12,7 +12,12 @@ export type newPostType = {
     tags: string[],
 }
 
-export function CreatePostForm({preview} : {preview: {file: File, type: string}}){
+export function CreatePostForm({
+    preview, 
+    closeModal
+} : {
+    preview: {file: File, type: string, width: number, height: number},
+    closeModal: () => void}){
     const initialValues: newPostType = {
         description: "",
         tags: [],
@@ -33,45 +38,46 @@ export function CreatePostForm({preview} : {preview: {file: File, type: string}}
     const tags = watch("tags");
 
     const selectTag = () => {
-        const regex = /^([a-zA-Z0-9]{3,})+(-[a-zA-Z0-9]+)*$/;
+        const regex = /^[a-zA-Z0-9]{3,10}(-[a-zA-Z0-9]{3,10})?$/;
 
-        if(tags.length > 2 || tags.includes(newTag) || !regex.test(newTag)) return;
+
+        if(tags.length >= 3 || tags.includes(newTag) || !regex.test(newTag)) return;
 
         setValue("tags", [...tags, newTag]);
         setNewTag("");
     }
 
     async function newPostHandler(data: newPostType) {
-        if (!preview.file) return alert('Selecione um arquivo')
+        if (!preview.file) return alert('Select a file');
 
         const { url, type } = await uploadToSupabase(preview.file)
 
         const response = await NewPostAction({
-            preview: { file: url, type: type},
+            preview: { file: url, type: type, width: preview.width, height: preview.height},
             data: {description: data.description, tags: data.tags},
         })
 
         if (!response.status) {
 
         } else {
-            
+            closeModal();
         }
     }
 
     return (
         <div className="w-full h-full p-3 relative">
-            <form className="flex flex-col gap-4" onSubmit={handleSubmit(newPostHandler)}>
-                <label htmlFor="description">Post description</label>
+            <form className="flex flex-col md:gap-5 gap-3" onSubmit={handleSubmit(newPostHandler)}>
+                <label htmlFor="description">Description</label>
                 <input
                     {...register("description")}
                     type="text"
                     id="description" 
-                    placeholder="write your description here"
+                    placeholder="Describe your post"
                     className="border border-[#ccc] w-full text-xs px-2 h-8 rounded-sm outline-0" />
                 
-                {errors.description && <p className="text-xs text-red-500">{errors.description.message}</p>}
+                {errors.description && <p className="text-[10px] text-red-500">{errors.description.message}</p>}
 
-                <label htmlFor="tag">Tags</label>
+                <label htmlFor="tag">Post tags</label>
 
                 <div className="flex gap-2">
                     <input
@@ -85,19 +91,20 @@ export function CreatePostForm({preview} : {preview: {file: File, type: string}}
                         id="tag"
                         value={newTag}
                         onChange={(e) => setNewTag(e.target.value)}
-                        placeholder="choose some tags to mark your post"
+                        placeholder="Add tags related to the post"
                         className="border border-[#ccc] w-full text-xs px-2 h-8 rounded-sm outline-0" />
 
                     <button 
                         type="button" 
                         onClick={selectTag}
-                        className="bg-blue-500 text-white text-xs px-4 rounded-sm cursor-pointer">
+                        className={`bg-linear-to-r from-[#512da8] to-[#6236c8] text-white text-xs px-4 rounded-sm 
+                        cursor-pointer`}>
                         
-                        Pick
+                        Add
                     </button>
                 </div>
                     
-                {errors.tags && <p className="text-xs text-red-500">{errors.tags.message}</p>}
+                {errors.tags && <p className="text-[10px] text-red-500">{errors.tags.message}</p>}
 
                 <div className="flex gap-2 flex-wrap">
                     {
@@ -114,9 +121,9 @@ export function CreatePostForm({preview} : {preview: {file: File, type: string}}
                 </div>
 
                     
-                <button className={`cursor-pointer bg-blue-500 text-white w-[90%] py-1.5 rounded-md
-                absolute top-[98%] translate-y-[-98%] left-[50%] translate-x-[-50%]`}>
-                    To post
+                <button className={`cursor-pointer bg-linear-to-r from-[#512da8] to-[#6236c8] w-full md:w-[90%]
+                absolute top-[98%] translate-y-[-98%] left-[50%] translate-x-[-50%] text-white py-2 rounded-md`}>
+                    Public post
                 </button>
             </form>
         </div>

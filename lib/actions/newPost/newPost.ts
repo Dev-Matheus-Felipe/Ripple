@@ -9,7 +9,7 @@ export async function NewPostAction({
   preview,
   data,
 }: {
-  preview: { file: string; type: string }
+  preview: { file: string; type: string, width: number, height: number }
   data: newPostType
 }) {
 
@@ -30,6 +30,9 @@ export async function NewPostAction({
       data: {
         ...validated.data,
         visual: preview.file,
+        visualType: preview.type,
+        sizeX: preview.width,
+        sizeY: preview.height,
         authorId: session.user.id,
       },
     })
