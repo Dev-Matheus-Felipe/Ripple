@@ -7,6 +7,7 @@ import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcrypt"
 import {v4 as uuid} from "uuid"
 import { encode } from "next-auth/jwt"
+import { randomUUID } from "crypto"
 
 export const {handlers,signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(prisma),
@@ -50,8 +51,32 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
         maxAge: 30 * 24 * 60 * 60, // 30 dias
     },
 
+    events: {
+        async createUser({user}){
+            if(!user.name || !user.email) throw Error("Data Missing");
+
+            const firstName = user.name.split(" ")[0].slice(0,10);
+            const username = firstName + "-" + randomUUID().split("-")[0];
+
+            try{
+                await prisma.user.update({
+                    where: {id: user.id},
+                    data: {
+                        username: username
+                    }
+                })
+            }catch{
+                throw Error("DataBase Intern Error");
+            }
+        }
+    },
+
     callbacks: {
-        async jwt({token, user, account}){
+        async signIn({user}){
+            return (!user.email || !user.name) ? false : true;
+        },
+        
+        async jwt({token, account}){
             if(account?.provider === "credentials"){
                 token.credentials = true;
             }
@@ -59,7 +84,7 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
             return token;
         },
 
-        async session({ session, token, user }) {
+        async session({ session, user }) {
             if (user) {
                 session.user = {
                     id: user.id,
@@ -70,6 +95,8 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
             return session;
         },
     },
+
+
 
     jwt: {
         encode: async function (params) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { HomePosts } from "@/lib/actions/getPosts/getPosts";
+import { HomePosts } from "@/lib/actions/post/getPosts";
 import { createContext, Dispatch, useState } from "react"
 import { ViewPostModal } from "../modals/viewPost";
 

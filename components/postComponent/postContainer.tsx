@@ -1,6 +1,6 @@
 "use client"
 
-import { GetPosts, HomePosts } from "@/lib/actions/getPosts/getPosts";
+import { GetPosts, HomePosts } from "@/lib/actions/post/getPosts";
 import { useState } from "react";
 import { useOnInView } from "react-intersection-observer";
 import { PostComponent } from "./postComponent";

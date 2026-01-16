@@ -1,4 +1,4 @@
-import { HomePosts } from "@/lib/actions/getPosts/getPosts"
+import { HomePosts } from "@/lib/actions/post/getPosts"
 import { X } from "lucide-react"
 import Image from "next/image"
 import { Dispatch } from "react"
@@ -14,12 +14,12 @@ export function ViewPostModal({
 
         <div className={`w-full h-full backdrop-blur-[1px] bg-[rgba(0,0,0,0.3)] z-999 absolute top-0 left-0 
         flex justify-center items-center p-[1%]`}>
-            <X
-                size={27} 
-                className="absolute top-3 right-3 cursor-pointer"
-                onClick={() => setState(null)} />
+            <div className="bg-(--modal-post-background) w-290 h-160 rounded-md relative">
+                <X
+                    size={27} 
+                    className="absolute top-3 right-3 cursor-pointer"
+                    onClick={() => setState(null)} />
 
-            <div className="bg-(--modal-post-background) w-290 h-160 rounded-md">
                 <div className="w-190 h-full relative flex items-center justify-center bg-black">
                     {
                         state.visualType.startsWith("video/")
