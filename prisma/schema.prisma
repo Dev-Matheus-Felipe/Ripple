@@ -86,7 +86,7 @@ model Response {
 
   createdAt DateTime @default(now())
 
-  likes     Int?
+  likes     String[]
   postId    String
   post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
 

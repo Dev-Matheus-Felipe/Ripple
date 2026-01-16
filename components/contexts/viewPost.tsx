@@ -1,22 +1,25 @@
 "use client"
 
-import { HomePosts } from "@/lib/actions/post/getPosts";
 import { createContext, Dispatch, useState } from "react"
 import { ViewPostModal } from "../modals/viewPost";
+import { SessionProvider } from "next-auth/react";
+import { Post } from "@/lib/types/post";
 
 type ViewPostType = {
-    state: HomePosts | null,
-    setState: Dispatch<React.SetStateAction<HomePosts | null>>
+    state: Post | null,
+    setState: Dispatch<React.SetStateAction<Post | null>>
 }
 
 export const CreateViewContext = createContext<ViewPostType | null>(null);
 
 export function ViewPostContext({children} : {children: React.ReactNode}){
-    const [state, setState] = useState<HomePosts | null>(null);
+    const [state, setState] = useState<Post | null>(null);
 
     return (
         <CreateViewContext.Provider value={{state, setState}}>
-            {children} {state && <ViewPostModal state={state} setState={setState} /> }
+            <SessionProvider>
+                {children} {state && <ViewPostModal post={state} setPost={setState} /> }
+            </SessionProvider>
         </CreateViewContext.Provider>
     )
 }

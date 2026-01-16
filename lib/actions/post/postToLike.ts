@@ -3,14 +3,14 @@
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
-export async function ToLike({ id }: { id: string }) {
+export async function PostToLike({ postId }: { postId: string }) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
 
   const userId = session.user.id
 
   const post = await prisma.post.findUnique({
-    where: { id },
+    where: { id: postId },
     select: { likes: true },
   })
 
@@ -19,7 +19,7 @@ export async function ToLike({ id }: { id: string }) {
   const hasLiked = post.likes.includes(userId)
 
   await prisma.post.update({
-    where: { id },
+    where: { id: postId },
     data: {
       likes: hasLiked
         ? { set: post.likes.filter(id => id !== userId) }

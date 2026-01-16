@@ -1,6 +1,11 @@
 export function GetPostTime({createdAt} : {createdAt: Date}){
-    const diff = Date.now() - new Date(createdAt).getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const now = new Date();
+    const past = new Date(createdAt);
+
+    now.setHours(0, 0, 0, 0);
+    past.setHours(0, 0, 0, 0);
+
+    const days = Math.floor((now.getTime() - past.getTime()) / (1000 * 60 * 60 * 24));
 
     if(days === 0) return "Today"
     else if(days === 1) return "Yesterday"

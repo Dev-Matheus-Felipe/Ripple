@@ -1,12 +1,13 @@
 "use client"
 
-import { GetPosts, HomePosts } from "@/lib/actions/post/getPosts";
+import { GetPosts } from "@/lib/actions/post/getPosts";
 import { useState } from "react";
 import { useOnInView } from "react-intersection-observer";
 import { PostComponent } from "./postComponent";
+import { Post } from "@/lib/types/post";
 
-export function PostContainer({initialPosts} : {initialPosts: HomePosts[]}){
-    const [posts, setPosts] = useState<HomePosts[]>([...initialPosts]);
+export function PostContainer({initialPosts} : {initialPosts: Post[]}){
+    const [posts, setPosts] = useState<Post[]>([...initialPosts]);
 
     const trackingRef = useOnInView(
         async(inView, entry) => {
@@ -28,7 +29,7 @@ export function PostContainer({initialPosts} : {initialPosts: HomePosts[]}){
         <div className="w-full h-full  flex flex-col gap-5 items-center">
             <div className="flex flex-col gap-10 min-h[100%] pb-5">
                 {
-                posts.map(post => (
+                posts.map( post => (
                     <PostComponent post={post} key={post.id} />
                 ))
                 }

@@ -6,27 +6,28 @@ import { CreatePostForm } from "../forms/createPost";
 
 const FileTypes = ["image/png","image/jpg","image/jpeg","image/webp","video/mp4","video/mkv"];
 
+type PreviewType = {
+    previewUrl: string, 
+    file: File, 
+    type: string,
+    width: number,
+    height: number
+}
+
 export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateAction<boolean>>}){
-    const [preview, setPreview] = useState<{
-        previewUrl: string, 
-        file: File, 
-        type: string,
-        width: number,
-        height: number
-    } | null>(null);
+    const [preview, setPreview] = useState< PreviewType | null>(null);
 
     function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
 
-        console.log(file?.type)
         if (!file) return;
 
         else if(!FileTypes.some(e => e === file?.type.toLocaleLowerCase())){
-            console.log("N EXISTE");
+            console.log("Unsupported file");
             return;
 
         }else if(file.size >  1024 * 1024 * 30){
-            console.log("PESADO DMS")
+            console.log("File size exceeds the limit")
             return;
 
         }
@@ -89,10 +90,11 @@ export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateA
                     <h1>Create new post</h1>
 
                     {preview && 
-                    <ChevronsLeft 
-                        size={20} 
-                        onClick={() => setPreview(null)}
-                        className="absolute left-[99%] translate-x-[-99%] top-[50%] translate-y-[-50%] cursor-pointer" />}
+                        <ChevronsLeft 
+                            size={20} 
+                            onClick={() => setPreview(null)}
+                            className="absolute left-[99%] translate-x-[-99%] top-[50%] translate-y-[-50%] cursor-pointer" />
+                    }
 
                 </div>
 

@@ -1,27 +1,29 @@
 "use client"
 
-import { HomePosts } from "@/lib/actions/post/getPosts";
-import { Bookmark, Circle, Heart, MessageCircle, Send } from "lucide-react";
-import Image from "next/image";
+import { Bookmark, Heart, MessageCircle, Send } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { CreateViewContext } from "../contexts/viewPost";
-import { GetPostTime } from "@/lib/getPostTime/getPostTIme";
-import { CheckLiked } from "@/lib/actions/post/checkLiked";
-import { ToLike } from "@/lib/actions/post/toLike";
+import { GetPostTime } from "@/lib/actions/post/getPostTime";
+import { PostToLike } from "@/lib/actions/post/postToLike";
+import { Post } from "@/lib/types/post";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
 
-export function PostComponent({post} : {post: HomePosts}){
-    const [liked, setLiked] = useState({state: false, likes: post.likes.length});
+export function PostComponent({post} : {post: Post}){
+    const [likeState, setLikeState] = useState({state: false, likes: post.likes.length});
+    const {data: session} = useSession();
+
     const ctx = useContext(CreateViewContext);
     if(!ctx) return null;
 
-    const {state, setState} = ctx;
+    const {setState} = ctx;
 
     const postDate = GetPostTime({createdAt: post.createdAt});
 
-    const toLike = async () => {
-        const hasLiked = await ToLike({ id: post.id })
+    const likeHandler = async () => {
+        const hasLiked = await PostToLike({postId: post.id})
 
-        setLiked(prev => ({
+        setLikeState(prev => ({
             state: hasLiked,
             likes: hasLiked ? prev.likes + 1 : prev.likes - 1
         }))
@@ -29,13 +31,14 @@ export function PostComponent({post} : {post: HomePosts}){
 
 
     useEffect(()=>{
-        const isLiked = async() => {
-            const hasLiked = await CheckLiked({likes: post.likes});
-            setLiked(prev => ({...prev, state: hasLiked}));
+        const isLiked = () => {
+            if(!session?.user || !session.user.id) return;
+            const hasLiked = post.likes.includes(session.user.id) ? true : false;
+            setLikeState(prev => ({...prev, state: hasLiked}));
         }
 
         isLiked();
-    },[])
+    },[session, post.likes])
 
     return (
         <div className="flex flex-col pt-10 gap-3">
@@ -48,9 +51,8 @@ export function PostComponent({post} : {post: HomePosts}){
                     height={30} />
                 
                 <h1 className="text-sm font-medium h-5">{post.author.username ?? "Matheus Felipe"}</h1>
-                <p className="text-xs h-5 flex items-end gap-2 pl-3">
-                    <Circle size={7} className="mb-1"/>
-                    {postDate}
+                <p className="text-xs h-5 flex items-end gap-2">
+                    • {postDate}
                 </p>
             </div>
 
@@ -78,8 +80,8 @@ export function PostComponent({post} : {post: HomePosts}){
             <div className="flex justify-between pt-2">
                 <div className="flex gap-1 items-center">
                         <Heart size={22} className="cursor-pointer" 
-                        fill={liked.state ? "var(--text-primary-color)" : ""}  onClick={() => toLike()} />
-                        <p className="pr-2">{liked.likes}</p>
+                        fill={likeState.state ? "var(--text-primary-color)" : ""}  onClick={() => likeHandler()} />
+                        <p className="pr-2">{likeState.likes}</p>
 
                         <MessageCircle size={18} />
                         <p className="pr-5">{post.responses.length}</p>
@@ -95,7 +97,7 @@ export function PostComponent({post} : {post: HomePosts}){
                 
                 <div className="flex gap-2 text-xs text-[#6236c8]">
                     {
-                        post.tags.map((tag, index) => (
+                        post.tags.map((tag: string, index: number) => (
                             <p key={index}>#{tag}</p>
                         ))
                     }
