@@ -16,7 +16,7 @@ export function PostComponent({post} : {post: Post}){
     const ctx = useContext(CreateViewContext);
     if(!ctx) return null;
 
-    const {setState} = ctx;
+    const {setPostId} = ctx;
 
     const postDate = GetPostTime({createdAt: post.createdAt});
 
@@ -57,7 +57,7 @@ export function PostComponent({post} : {post: Post}){
             </div>
 
             <button className={`w-120 min-h-70 max-h-140 relative rounded-md border border-[#3a3a3a] flex items-center 
-            justify-center cursor-pointer`} onClick={() => setState(post)}>
+            justify-center cursor-pointer`} onClick={() => setPostId(post.id)}>
                 
                 {
                     post.visualType.startsWith("video/")

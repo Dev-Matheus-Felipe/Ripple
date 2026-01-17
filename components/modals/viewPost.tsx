@@ -11,10 +11,12 @@ import { Response as ResponesComponent } from "../response/response"
 
 export  function ViewPostModal({
     post,
-    setPost
+    setPost,
+    setPostId
 } : {
     post: Post,
-    setPost: Dispatch<React.SetStateAction<Post | null>> 
+    setPost: Dispatch<React.SetStateAction<Post | null>>,
+    setPostId: Dispatch<React.SetStateAction<string | null>>
 }){
     const [messages, setMessages] = useState<Response[]>(post.responses)
     const [isFollower,setIsFollower] = useState(false);
@@ -39,7 +41,7 @@ export  function ViewPostModal({
                 <X
                     size={27} 
                     className="absolute top-3 right-3 cursor-pointer"
-                    onClick={() => setPost(null)} />
+                    onClick={() => {setPost(null), setPostId(null)}} />
 
                 <div className="w-200 h-full relative flex items-center justify-center bg-black">
                     {

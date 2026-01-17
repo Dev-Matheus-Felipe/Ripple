@@ -1,8 +1,9 @@
 import { PostContainer } from "@/components/postComponent/postContainer";
 import { GetPosts } from "@/lib/actions/post/getPosts";
+import { Post } from "@/lib/types/post";
 
 export default async function Home() {
-  const initialPosts = await GetPosts();
+  const initialPosts: Post[] = await GetPosts();
   
   return (
     <div className="w-full h-full overflow-auto p-[1%] flex">

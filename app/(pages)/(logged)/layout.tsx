@@ -1,7 +1,7 @@
 import { PostContext } from "@/components/contexts/createPost";
 import { ViewPostContext } from "@/components/contexts/viewPost";
 import { Sidebar } from "@/components/sidebar/sidebar";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function MainLayout({children} : {children: React.ReactNode}){
     return (
@@ -11,7 +11,9 @@ export default function MainLayout({children} : {children: React.ReactNode}){
                     <Sidebar />
 
                     <div className="z-1 w-full h-screen overflow-auto">
-                        {children}
+                        <Suspense fallback={<p>OLA AMIGOS</p>}>
+                            {children}
+                        </Suspense>
                     </div>
                 </div>
             </ViewPostContext>
