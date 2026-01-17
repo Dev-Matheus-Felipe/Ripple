@@ -1,44 +1,46 @@
 "use client"
 
 import { Bookmark, Heart, MessageCircle, Send } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
-import { CreateViewContext } from "../contexts/viewPost";
+import { Dispatch } from "react";
 import { GetPostTime } from "@/lib/actions/post/getPostTime";
 import { PostToLike } from "@/lib/actions/post/postToLike";
 import { Post } from "@/lib/types/post";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
+import { HomePostsType } from "../contexts/viewPost";
 
-export function PostComponent({post} : {post: Post}){
-    const [likeState, setLikeState] = useState({state: false, likes: post.likes.length});
-    const {data: session} = useSession();
+export function PostComponent({
+    post, 
+    setState,
+    userId
+} : {
+    post: Post, 
+    setState: Dispatch<React.SetStateAction<HomePostsType>>,
+    userId: string | undefined
+}){
 
-    const ctx = useContext(CreateViewContext);
-    if(!ctx) return null;
-
-    const {setPostId} = ctx;
-
+    const isLiked = !!userId && post.likes.includes(userId);
     const postDate = GetPostTime({createdAt: post.createdAt});
 
     const likeHandler = async () => {
-        const hasLiked = await PostToLike({postId: post.id})
+        if (!userId) return;
 
-        setLikeState(prev => ({
-            state: hasLiked,
-            likes: hasLiked ? prev.likes + 1 : prev.likes - 1
-        }))
-    }
+        const hasLiked = await PostToLike({ postId: post.id });
 
+        setState(prev => ({
+            ...prev,
+            posts: prev.posts.map(p => {
+                if (p.id !== post.id) return p;
 
-    useEffect(()=>{
-        const isLiked = () => {
-            if(!session?.user || !session.user.id) return;
-            const hasLiked = post.likes.includes(session.user.id) ? true : false;
-            setLikeState(prev => ({...prev, state: hasLiked}));
-        }
+                return {
+                    ...p,
+                    likes: hasLiked
+                        ? p.likes.filter(id => id !== userId)
+                        : [...p.likes, userId]
+                };
+            })
+        }));
+    };
 
-        isLiked();
-    },[session, post.likes])
 
     return (
         <div className="flex flex-col pt-10 gap-3">
@@ -57,7 +59,7 @@ export function PostComponent({post} : {post: Post}){
             </div>
 
             <button className={`w-120 min-h-70 max-h-140 relative rounded-md border border-[#3a3a3a] flex items-center 
-            justify-center cursor-pointer`} onClick={() => setPostId(post.id)}>
+            justify-center cursor-pointer`} onClick={() => setState(prev => ({...prev, currentPost: post.id}))}>
                 
                 {
                     post.visualType.startsWith("video/")
@@ -80,8 +82,8 @@ export function PostComponent({post} : {post: Post}){
             <div className="flex justify-between pt-2">
                 <div className="flex gap-1 items-center">
                         <Heart size={22} className="cursor-pointer" 
-                        fill={likeState.state ? "var(--text-primary-color)" : ""}  onClick={() => likeHandler()} />
-                        <p className="pr-2">{likeState.likes}</p>
+                        fill={isLiked ? "var(--text-primary-color)" : ""}  onClick={() => likeHandler()} />
+                        <p className="pr-2">{post.likes.length}</p>
 
                         <MessageCircle size={18} />
                         <p className="pr-5">{post.responses.length}</p>

@@ -1,39 +1,39 @@
 "use client"
 
-import { createContext, Dispatch, useEffect, useState } from "react"
+import React, { createContext, Dispatch, useEffect, useState } from "react"
+import { Post } from "@/lib/types/post";
 import { ViewPostModal } from "../modals/viewPost";
 import { SessionProvider } from "next-auth/react";
-import { Post } from "@/lib/types/post";
-import { GetUniquePost } from "@/lib/actions/post/getUniquePost";
+
 
 type ViewPostType = {
-    postId: string | null,
-    setPostId: Dispatch<React.SetStateAction<string | null>>
+    state: HomePostsType,
+    setState: Dispatch<React.SetStateAction<HomePostsType>>
 }
 
-export const CreateViewContext = createContext<ViewPostType | null>(null);
 
-export function ViewPostContext({children} : {children: React.ReactNode}){
-    const [postId, setPostId] = useState<string | null>(null);
-    const [post, setPost] = useState<Post | null>(null);
+export type HomePostsType = {
+    posts: Post[],
+    currentPost: string | null
+}
 
-    useEffect(() => {
-        const postHandler = async() => {
-            if(!postId) return;
+export const CreatePostViewContext = createContext<ViewPostType | null>(null);
 
-            const newatualizatedPost = await GetUniquePost({postId: postId});
-            setPost(newatualizatedPost);
-        }
-
-        postHandler();
-    },[postId]);
+export function PostViewContext({children} : {children: React.ReactNode}){
+    const [state, setState] = useState<HomePostsType>({
+        posts: [],
+        currentPost: null
+    }); 
 
 
     return (
-        <CreateViewContext.Provider value={{postId, setPostId}}>
+        <CreatePostViewContext.Provider value={{state, setState}}>
+
+            {children}  
+
             <SessionProvider>
-                {children} {(postId && post) && <ViewPostModal post={post} setPost={setPost} setPostId={setPostId} /> }
+                    {state.currentPost && <ViewPostModal postId={state.currentPost} />}
             </SessionProvider>
-        </CreateViewContext.Provider>
+        </CreatePostViewContext.Provider>
     )
 }

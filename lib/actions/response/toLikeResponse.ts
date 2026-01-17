@@ -4,7 +4,6 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { Response } from "@/lib/types/post";
 
-
 export async function ToLikeResponse({response} : {response: Response}){
     const session = await auth();
 
@@ -31,6 +30,7 @@ export async function ToLikeResponse({response} : {response: Response}){
                     : {push: session.user.id}
             }
         })
+
         return isLiked;
     }catch{
         throw Error("Internal database error");

@@ -1,12 +1,12 @@
 import { PostContext } from "@/components/contexts/createPost";
-import { ViewPostContext } from "@/components/contexts/viewPost";
+import { PostViewContext } from "@/components/contexts/viewPost";
 import { Sidebar } from "@/components/sidebar/sidebar";
 import React, { Suspense } from "react";
 
 export default function MainLayout({children} : {children: React.ReactNode}){
     return (
         <PostContext>
-            <ViewPostContext>
+            <PostViewContext>
                 <div className="flex relative">
                     <Sidebar />
 
@@ -16,7 +16,7 @@ export default function MainLayout({children} : {children: React.ReactNode}){
                         </Suspense>
                     </div>
                 </div>
-            </ViewPostContext>
+            </PostViewContext>
         </PostContext>
     )
 }

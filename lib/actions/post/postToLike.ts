@@ -27,5 +27,5 @@ export async function PostToLike({ postId }: { postId: string }) {
     }
   })
 
-  return !hasLiked
+  return hasLiked
 }
