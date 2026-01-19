@@ -8,11 +8,15 @@ import { useEffect, useState } from "react";
 import { SearchComponent } from "./search";
 import { NotificationsComponent } from "./notifications";
 import { CreatePostComponent } from "./createPost";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const isPop = ["/search", "/notifications", "/messages"];
 const icon_size = 24;
 
 export function Sidebar(){
+    const {data: session} = useSession();
+
     const [mounted, setMounted] = useState<boolean>(false);
     const [popUp, setPopUp] = useState<string>("");
 
@@ -27,7 +31,7 @@ export function Sidebar(){
         setMounted(true);
     },[])
 
-    if(!mounted) return null;
+    if(!mounted || !session) return null;
 
     const linkStles = (link: string) => `${pathname === link ? "font-bold" : "text-(--primary-color) font-medium"} `;
 
@@ -112,9 +116,18 @@ export function Sidebar(){
 
 
                         {/* --------------------- PROFILE PAGE --------------------- */}
-                        <Link className={container_link} href={"/profile"} onClick={() => showPopUp("/explore")}>
+                        <Link 
+                            className={`${container_link} gap-1.5!`} 
+                            href={"/profile"} 
+                            onClick={() => showPopUp("/explore")}>
+                                
                             <div className={container_button()}>
-                                <Circle size={icon_size}/>
+                                <Image 
+                                    src={session.user?.image ?? "/generals/profile.svg"} 
+                                    alt="profile picture"
+                                    width={30}
+                                    height={30}
+                                    className="rounded-full" />
                             </div>
 
                             <h1 className={linkStles("/profile")}>Profile</h1>

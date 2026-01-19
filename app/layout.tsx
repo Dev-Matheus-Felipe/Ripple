@@ -1,6 +1,8 @@
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar/sidebar";
+import { Suspense } from "react";
+import { PostViewContext } from "@/components/contexts/viewPost";
 
 export default function RootLayout({
   children,
@@ -11,7 +13,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider attribute={"class"} enableSystem={false} defaultTheme="dark">
-          {children}
+          <PostViewContext>
+          
+            <Suspense fallback={<p>CU</p>}>
+              {children}
+            </Suspense>
+          </PostViewContext>
         </ThemeProvider>
       </body>
     </html>

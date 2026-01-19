@@ -28,10 +28,7 @@ export default  function Login() {
       </form>
 
       <button onClick={async() => {
-        const result2 = await signIn("credentials", {
-          email: "rippleproject74@gmail.com",
-          password: "ripple123",
-        })
+        const result2 = await signIn("github");
 
         console.log(result2)
       }}>LOGIN</button>

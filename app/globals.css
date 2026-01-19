@@ -36,6 +36,8 @@ body{
   --modal-post-title: #0c1014;
   --modal-post-background: #1b1e21;
   --modal-border-b: #343434;
+
+  --modal-post-border: #1b1e21;
 }
 
 /* --------------------------------------- LIGHT THEME --------------------------------------- */
@@ -53,6 +55,7 @@ body{
   --modal-post-title: #ffffff;
   --modal-post-background: rgb(255, 255, 255);
   --modal-border-b: #2a2a2a;
+
 }
 
 

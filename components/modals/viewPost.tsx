@@ -6,66 +6,48 @@ import { useSession } from "next-auth/react"
 import Image from "next/image"
 import { useContext, useEffect, useState } from "react"
 import { CreateResponse } from "../forms/createResponse"
-import { Response } from "@/lib/types/post"
 import { Response as ResponesComponent } from "../response/response"
 import { CreatePostViewContext } from "../contexts/viewPost"
+import { useRouter } from "next/navigation"
 
-export  function ViewPostModal({postId} : {postId: string | null,}){
-
+export function ViewPostModal({ postId }: { postId: string }) {
     const ctx = useContext(CreatePostViewContext);
-    if (!ctx) return null;
+    const { data: session } = useSession();
+    const router = useRouter();
 
-    const { state, setState } = ctx;
+    const [isFollower, setIsFollower] = useState(false);
 
-    const post = state.posts.find(
-        p => p.id === postId
-    );
-
-    if(!post) return null;
-
-    const [messages, setMessages] = useState<Response[]>(post.responses)
-    const [isFollower,setIsFollower] = useState(false);
-
-    const {data: session} = useSession();
-    if(!session?.user) return null;
+    const post = ctx?.state.posts.find(p => p.id === postId)
 
     useEffect(() => {
-        const isFollower = async() => {
-            const result = await CheckFollower({followers: post.author.followers});
-            setIsFollower(result);
+        if (!post) return
+
+        const run = async () => {
+            const result = await CheckFollower({
+                followers: post.author.followers
+            })
+            setIsFollower(result)
         }
 
-        isFollower();
-    },[])
-    
-    useEffect(() => {
-        setState(prev => (
-            {
-                ...prev,
-                posts: prev.posts.map(e => {
-                    if(e.id === post.id){
-                        let newPost = {...e};
-                        newPost.responses = messages;
-                        return newPost;
+        run()
+    }, [post])
 
-                    }else 
-                        return e
-                })
-            }
-        ))
-    },[messages])
+    if (!session?.user || !ctx || !post) return null
+
+    const { setState } = ctx;
 
     return (
 
         <div className={`w-full h-full backdrop-blur-[1px] bg-[rgba(0,0,0,0.3)] z-20 absolute top-0 left-0
         flex justify-center items-center p-[1%]`}>
-            <div className="bg-(--modal-post-background) w-290 h-160 rounded-md relative flex">
+            <div className="bg-(--modal-post-background) max-w-290 h-160 rounded-md relative flex">
                 <X
                     size={27} 
                     className="absolute top-3 right-3 cursor-pointer"
-                    onClick={() => setState(prev => ({...prev, currentPost: null})) } />
+                    onClick={() => router.back()} />
 
-                <div className="w-200 h-full relative flex items-center justify-center bg-black">
+                <div className={`${post.sizeX < post.sizeY ? "min-w-120 max-w-200" : "w-200"}
+                h-full relative flex items-center justify-center bg-black`}>
                     {
                         post.visualType.startsWith("video/")
                             ? <video
@@ -97,7 +79,7 @@ export  function ViewPostModal({postId} : {postId: string | null,}){
                         <h1 className="text-sm">{post.author.username ?? "Matheus Felipe"}</h1>
 
                         <button className={`ml-4 text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
-                        rounded-md cursor-pointer`}>
+                        rounded-md cursor-pointer text-white`}>
                             {isFollower ? "Following" : "Follow"} 
                         </button>
                     </div>
@@ -126,7 +108,7 @@ export  function ViewPostModal({postId} : {postId: string | null,}){
                             width={40} 
                             height={40} />
 
-                        <CreateResponse post={post} setMessages={setMessages} />
+                        <CreateResponse post={post} setState={setState} />
                     </div>
                 </div>
             </div>

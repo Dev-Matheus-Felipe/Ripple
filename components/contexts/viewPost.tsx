@@ -1,9 +1,7 @@
 "use client"
 
-import React, { createContext, Dispatch, useEffect, useState } from "react"
+import React, { createContext, Dispatch, useState } from "react"
 import { Post } from "@/lib/types/post";
-import { ViewPostModal } from "../modals/viewPost";
-import { SessionProvider } from "next-auth/react";
 
 
 type ViewPostType = {
@@ -24,16 +22,10 @@ export function PostViewContext({children} : {children: React.ReactNode}){
         posts: [],
         currentPost: null
     }); 
-
-
+    
     return (
         <CreatePostViewContext.Provider value={{state, setState}}>
-
             {children}  
-
-            <SessionProvider>
-                    {state.currentPost && <ViewPostModal postId={state.currentPost} />}
-            </SessionProvider>
         </CreatePostViewContext.Provider>
     )
 }

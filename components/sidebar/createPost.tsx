@@ -16,7 +16,7 @@ export function CreatePostComponent({
     const ctx = useContext(CreatePostContext);
     if(!ctx) return null;
 
-    const {state, setState} = ctx;
+    const {setState} = ctx;
 
     return (
         <button className={container_link} onClick={() => setState(prev => !prev)}>

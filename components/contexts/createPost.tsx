@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, Dispatch, useContext, useState } from "react"
+import { createContext, Dispatch, useState } from "react"
 import { CreatePostModal } from "../modals/createPost";
 
 type CreatePostType = {

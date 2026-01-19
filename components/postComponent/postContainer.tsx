@@ -9,12 +9,12 @@ import { CreatePostViewContext } from "../contexts/viewPost";
 import { useSession } from "next-auth/react";
 
 export function PostContainer({initialPosts} : {initialPosts: Post[]}){
+
     const ctx = useContext(CreatePostViewContext);
     if(!ctx) return null;
 
-    const {state, setState} = ctx;
-
     const {data: session} = useSession();
+    const {state, setState} = ctx;
 
     const trackingRef = useOnInView(
         async(inView, entry) => {

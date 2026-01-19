@@ -7,8 +7,7 @@ export default async function Home() {
   const initialPosts: Post[] = await GetPosts();
   
   return (
-    <div className="w-full h-full overflow-auto p-[1%] flex">
-      
+    <div className="w-full h-full overflow-auto  flex">
       <SessionProvider>
         <PostContainer initialPosts={initialPosts} />
       </SessionProvider>

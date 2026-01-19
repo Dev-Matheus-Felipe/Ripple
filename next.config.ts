@@ -11,6 +11,24 @@ const nextConfig: NextConfig = {
         hostname: "wiqxdchkoftclgmielrd.supabase.co",
         pathname: "/storage/v1/object/public/**",
       },
+
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        pathname: "/u/**",
+      },
+
+      {
+        protocol: "https",
+        hostname: "cdn.discordapp.com",
+        pathname: "/**",
+      },
+
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      }
     ],
   },
 };

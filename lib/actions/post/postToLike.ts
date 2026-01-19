@@ -7,7 +7,8 @@ export async function PostToLike({ postId }: { postId: string }) {
   const session = await auth()
   if (!session?.user?.id) throw new Error("Unauthorized")
 
-  const userId = session.user.id
+  const userId = session.user.id;
+
 
   const post = await prisma.post.findUnique({
     where: { id: postId },

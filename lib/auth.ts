@@ -55,7 +55,7 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
         async createUser({user}){
             if(!user.name || !user.email) throw Error("Data Missing");
 
-            const firstName = user.name.split(" ")[0].slice(0,10);
+            const firstName = user.name.split(" ")[0].slice(0,10).toLocaleLowerCase();
             const username = firstName + "-" + randomUUID().split("-")[0];
 
             try{
@@ -89,6 +89,7 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
                 session.user = {
                     id: user.id,
                     email: user.email,
+                    image: user.image,
                     emailVerified: user.emailVerified,
                 };
             }

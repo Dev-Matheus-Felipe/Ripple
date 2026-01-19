@@ -4,13 +4,14 @@ import { Post, Response } from "@/lib/types/post";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch } from "react";
 import { useForm } from "react-hook-form";
+import { HomePostsType } from "../contexts/viewPost";
 
 export function CreateResponse({
     post, 
-    setMessages
+    setState
 } : {
     post: Post, 
-    setMessages: Dispatch<React.SetStateAction<Response[]>>
+    setState: Dispatch<React.SetStateAction<HomePostsType>>
 }){
     const {
         register,
@@ -26,7 +27,15 @@ export function CreateResponse({
         const result = await ResponseAction({response: data.response, postId: post.id});
 
         if (result.state) {
-            setMessages(prev => [...prev, result.newMessage]);
+           setState(prev => ({
+                ...prev,
+                posts: prev.posts.map(p =>
+                    p.id === post.id
+                    ? { ...p, responses: [...p.responses, result.newMessage] }
+                    : p
+                )
+                }))
+                
             setValue("response", "");
             
         }else{
@@ -46,7 +55,7 @@ export function CreateResponse({
             <button 
                 type="submit" 
                 className={`bg-linear-to-r ${
-                    errors.response ? "from-[#ff0000] to-[#ff0000]" : "from-[#512da8] to-[#6236c8]"
+                    errors.response ? "from-[#ff0000] to-[#ff0000]" : "from-[#512da8] to-[#6236c8] text-white" 
                 } rounded-md cursor-pointer px-3 p-1`}>
                 
                 Send

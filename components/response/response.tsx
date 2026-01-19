@@ -64,7 +64,8 @@ export function Response({
                 <Heart
                     size={14}
                     className="cursor-pointer"
-                    fill={isLiked ? "var(--text-primary-color)" : "none"}
+                    fill={isLiked ? "red" : "transparent"}
+                    color={isLiked ? "red" : "var(--text-primary-color)"}
                     onClick={toLike}
                 />
             </div>

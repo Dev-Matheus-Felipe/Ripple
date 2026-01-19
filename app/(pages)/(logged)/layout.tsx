@@ -1,14 +1,16 @@
 import { PostContext } from "@/components/contexts/createPost";
-import { PostViewContext } from "@/components/contexts/viewPost";
 import { Sidebar } from "@/components/sidebar/sidebar";
+import { SessionProvider } from "next-auth/react";
 import React, { Suspense } from "react";
 
-export default function MainLayout({children} : {children: React.ReactNode}){
+export default function MainLayout({children, modal} : {children: React.ReactNode, modal: React.ReactNode}){
     return (
         <PostContext>
-            <PostViewContext>
                 <div className="flex relative">
-                    <Sidebar />
+                    <SessionProvider>
+                        <Sidebar />
+                    </SessionProvider>
+                    {modal}
 
                     <div className="z-1 w-full h-screen overflow-auto">
                         <Suspense fallback={<p>OLA AMIGOS</p>}>
@@ -16,7 +18,6 @@ export default function MainLayout({children} : {children: React.ReactNode}){
                         </Suspense>
                     </div>
                 </div>
-            </PostViewContext>
         </PostContext>
     )
 }
