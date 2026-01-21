@@ -20,7 +20,7 @@ export function CreatePostComponent({
 
     return (
         <button className={container_link} onClick={() => setState(prev => !prev)}>
-            <div  className={container_button()}>
+            <div className={container_button()}>
                 <Plus size={icon_size}/>
             </div>
 

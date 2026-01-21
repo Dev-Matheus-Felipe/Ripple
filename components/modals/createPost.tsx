@@ -76,7 +76,7 @@ export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateA
 
 
     return (
-        <div className={`w-full h-full backdrop-blur-[1px] bg-[rgba(0,0,0,0.3)] z-999 absolute top-0 left-0 
+        <div className={`w-full h-full backdrop-blur-[10px] bg-[rgba(0,0,0,0.3)] z-999 absolute top-0 left-0 
         flex justify-center items-center p-[1%]`}>
             <X 
                 size={27} 
@@ -84,7 +84,7 @@ export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateA
                 onClick={() => closeModal()} />
 
             <div className={`md:h-120  bg-(--modal-post-background) rounded-md flex flex-col duration-400
-            ${preview ? "w-180 h-160" :"w-110 h-120"}`}>
+            ${preview ? "w-180 h-160" :"w-110 h-120"} z-999`}>
                 <div className={`bg-(--modal-post-title) w-full min-h-11 rounded-t-md flex items-center justify-center 
                 border-b border-(--modal-border-b) relative`}>
                     <h1>Create new post</h1>

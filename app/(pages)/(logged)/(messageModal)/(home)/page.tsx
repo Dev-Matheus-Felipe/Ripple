@@ -12,7 +12,7 @@ export default async function Home() {
         <PostContainer initialPosts={initialPosts} />
       </SessionProvider>
       
-      <div className="w-150 h-150" />
+      <div className="w-150 h-150  xl:block hidden"  />
     </div>
   );
 }

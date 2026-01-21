@@ -17,7 +17,7 @@ export function ViewUniquePost({post, session} : {post: Post, session: Session})
     
     return (
         <div className="flex-1 flex flex-col">
-            <div className="flex h-20 items-center px-4 gap-3 border-b border-(--modal-border-b)">
+            <div className="flex h-20 items-center mx-3 gap-3 border-b border-(--modal-border-b)">
                 <Image
                     className="rounded-full"
                     src={post.author.image ?? "/generals/profile.svg"}
@@ -27,7 +27,7 @@ export function ViewUniquePost({post, session} : {post: Post, session: Session})
 
                 <h1 className="text-sm">{post.author.username ?? "Matheus Felipe"}</h1>
 
-                <button className={`ml-4 text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
+                <button className={`ml-4 text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] text-white
                 rounded-md cursor-pointer`}>
                     {isFollower ? "Following" : "Follow"} 
                 </button>
@@ -49,7 +49,7 @@ export function ViewUniquePost({post, session} : {post: Post, session: Session})
                 }
             </div>
             
-            <div className="flex gap-2 items-center px-3 flex-1 border-t border-(--modal-border-b)">
+            <div className="flex gap-2 items-center mx-3 flex-1 border-t border-(--modal-border-b)">
                 <Image 
                     className="rounded-full"
                     src={session.user?.image ?? "/generals/profile.svg"}

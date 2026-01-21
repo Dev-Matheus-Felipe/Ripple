@@ -39,7 +39,7 @@ export function PostContainer({initialPosts} : {initialPosts: Post[]}){
     return (
         <>
             <div className="w-full h-full  flex flex-col gap-5 items-center">
-                <div className="flex flex-col gap-10 min-h[100%] pb-5">
+                <div className="flex flex-col gap-10 min-h-full pb-5">
                     {
                         state.posts.map( post => (
                             <PostComponent post={post} setState={setState} userId={session?.user?.id} key={post.id} /> ))

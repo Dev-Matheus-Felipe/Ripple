@@ -38,16 +38,15 @@ export function ViewPostModal({ postId }: { postId: string }) {
 
     return (
 
-        <div className={`w-full h-full backdrop-blur-[1px] bg-[rgba(0,0,0,0.3)] z-20 absolute top-0 left-0
-        flex justify-center items-center p-[1%]`}>
-            <div className="bg-(--modal-post-background) max-w-290 h-160 rounded-md relative flex">
+        <div className={`w-screen h-screen backdrop-blur-[1px] bg-[rgba(0,0,0,0.3)] z-999 absolute top-0 left-0`}>
+            <div className={`bg-(--modal-post-background) max-w-290 h-160 rounded-md absolute top-1/2 left-1/2 -translate-1/2 flex`}>
                 <X
-                    size={27} 
+                    size={25} 
                     className="absolute top-3 right-3 cursor-pointer"
                     onClick={() => router.back()} />
 
-                <div className={`${post.sizeX < post.sizeY ? "min-w-120 max-w-200" : "w-200"}
-                h-full relative flex items-center justify-center bg-black`}>
+                <div className={`${post.sizeX < post.sizeY ? "min-w-130 max-w-200" : "w-200"}
+                h-full relative flex items-center justify-center bg-black rounded-l-md`}>
                     {
                         post.visualType.startsWith("video/")
                             ? <video
@@ -68,17 +67,17 @@ export function ViewPostModal({ postId }: { postId: string }) {
                 </div>
 
                 <div className="flex-1 flex flex-col">
-                    <div className="flex h-20 items-center px-4 gap-3 border-b border-(--modal-border-b)">
+                    <div className="flex h-20 items-center px-4 gap-3 border-b border-(--modal-border-b) rounded-t-md">
                         <Image 
                             className="rounded-full"
                             src={post.author.image ?? "/generals/profile.svg"}
                             alt={"author picture"} 
-                            width={45} 
-                            height={45} />
+                            width={40} 
+                            height={40} />
 
                         <h1 className="text-sm">{post.author.username ?? "Matheus Felipe"}</h1>
 
-                        <button className={`ml-4 text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
+                        <button className={`text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
                         rounded-md cursor-pointer text-white`}>
                             {isFollower ? "Following" : "Follow"} 
                         </button>

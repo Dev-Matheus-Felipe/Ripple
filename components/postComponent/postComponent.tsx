@@ -44,7 +44,7 @@ export function PostComponent({
 
 
     return (
-        <div className="flex flex-col pt-10 gap-3">
+        <div className="flex flex-col gap-3 w-full md:pt-10 pt-4">
             <div className="w-full flex items-center h-6 gap-2 px-3 justify-between">
                 <div className="flex items-center h-6 gap-2">
                     <Image 
@@ -55,7 +55,7 @@ export function PostComponent({
                         height={30} />
                     
                     <h1 className="text-sm font-medium h-5">{post.author.username ?? "Matheus Felipe"}</h1>
-                    <p className="text-xs h-5 flex items-end gap-2">
+                    <p className="text-xs h-5 flex items-center gap-2">
                         • {postDate}
                     </p>
                 </div>
@@ -63,7 +63,7 @@ export function PostComponent({
                 <Ellipsis size={20} className="cursor-pointer" />
             </div>
 
-            <Link className={`w-120 min-h-70 max-h-140 relative rounded-md border border-[#3a3a3a] flex items-center 
+            <Link className={`max-w-120 min-h-70 max-h-140 relative rounded-md border border-[#3a3a3a] flex items-center 
             justify-center cursor-pointer`} href={`/p/${post.id}`}>
                 
                 {

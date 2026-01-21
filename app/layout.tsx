@@ -1,6 +1,5 @@
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar/sidebar";
 import { Suspense } from "react";
 import { PostViewContext } from "@/components/contexts/viewPost";
 

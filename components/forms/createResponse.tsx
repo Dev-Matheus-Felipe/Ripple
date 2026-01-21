@@ -44,12 +44,12 @@ export function CreateResponse({
     }
 
     return (
-        <form className="flex justify-between w-full" onSubmit={handleSubmit(sendResponse)}>
+        <form className="flex justify-between w-70" onSubmit={handleSubmit(sendResponse)}>
             <input 
                 {...register("response")}
                 type="text" 
                 placeholder="Add a comment..." 
-                className="text-sm outline-0 w-50" />
+                className="text-sm outline-0 max-w-50" />
 
 
             <button 
