@@ -11,7 +11,7 @@ const icon_size = 25;
 export function MobileSidebar({session} : {session: Session | null}){
     const [popUp, setPopUp] = useState<string>("");
 
-    const container_button = () => `p-2 rounded-md cursor-pointer `;
+    const container_button = () => ` rounded-md cursor-pointer `;
 
     const ctx = useContext(CreatePostContext);
     if(!ctx) return null;
@@ -45,7 +45,7 @@ export function MobileSidebar({session} : {session: Session | null}){
                     alt="profile picture"
                     width={30}
                     height={30}
-                    className="rounded-full" />
+                    className="rounded-full w-7.5 h-7.5 object-cover object-center" />
             </div>
         </>
     )

@@ -52,7 +52,7 @@ export function Response({
             <div className="flex justify-between items-center">
                 <div className="flex gap-2 items-center">
                     <Image
-                        className="rounded-full"
+                        className="rounded-full object-cover object-center w-7.5 h-7.5"
                         src={response.author.image ?? "/generals/profile.svg"}
                         alt="author picture"
                         width={30}

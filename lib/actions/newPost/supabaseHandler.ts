@@ -15,7 +15,6 @@ export async function uploadToSupabase(file: File) {
     })
 
   if (error) {
-    console.error(error)
     throw new Error('Upload failed')
   }
 

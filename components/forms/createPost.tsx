@@ -17,7 +17,9 @@ export function CreatePostForm({
     closeModal
 } : {
     preview: {file: File, type: string, width: number, height: number},
-    closeModal: () => void}){
+    closeModal: () => void}
+){
+    
     const initialValues: newPostType = {
         description: "",
         tags: [],

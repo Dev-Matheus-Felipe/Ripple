@@ -4,6 +4,7 @@
   --breakpoint-sidebar: 1030px;
   --breakpoint-tew: 741px;
   --breakpoint-b860: 860px;
+  --breakpoint-b500: 500px;
 }
 
 @theme inline {

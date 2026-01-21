@@ -85,7 +85,7 @@ export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateA
 
             <div className={`md:h-120  bg-(--modal-post-background) rounded-md flex flex-col duration-400
             ${preview ? "w-180 h-160" :"w-110 h-120"} z-999`}>
-                <div className={`bg-(--modal-post-title) w-full min-h-11 rounded-t-md flex items-center justify-center 
+                <div className={`bg-(--modal-post-title) w-full min-h-12 rounded-t-md flex items-center justify-center 
                 border-b border-(--modal-border-b) relative`}>
                     <h1>Create new post</h1>
 
@@ -123,6 +123,7 @@ export function CreatePostModal({setState} : {setState: Dispatch<React.SetStateA
                                     className={`cursor-pointer bg-linear-to-r from-[#512da8] to-[#6236c8] 
                                     text-white px-4 py-1.5 rounded-md `}>
                                     Select from device
+                                    
                                     <input 
                                         type="file"
                                         accept="image/*,video/*"

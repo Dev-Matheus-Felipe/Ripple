@@ -51,7 +51,7 @@ export type SavedPost = {
 
 
 export type MyProfileData = {
-  name: string
+  name: string | null
   username: string | null
   image: string | null
   email: string

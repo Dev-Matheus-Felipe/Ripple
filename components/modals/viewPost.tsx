@@ -69,7 +69,7 @@ export function ViewPostModal({ postId }: { postId: string }) {
                 <div className="flex-1 flex flex-col">
                     <div className="flex h-20 items-center px-4 gap-3 border-b border-(--modal-border-b) rounded-t-md">
                         <Image 
-                            className="rounded-full"
+                            className="rounded-full w-10 h-10 object-cover object-center"
                             src={post.author.image ?? "/generals/profile.svg"}
                             alt={"author picture"} 
                             width={40} 
@@ -101,7 +101,7 @@ export function ViewPostModal({ postId }: { postId: string }) {
                     
                     <div className="flex gap-2 items-center px-3 flex-1 border-t border-(--modal-border-b)">
                         <Image 
-                            className="rounded-full"
+                            className="rounded-full w-10 h-9 object-cover object-center"
                             src={session?.user.image ?? "/generals/profile.svg"}
                             alt={"author picture"} 
                             width={40} 

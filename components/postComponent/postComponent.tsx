@@ -48,11 +48,12 @@ export function PostComponent({
             <div className="w-full flex items-center h-6 gap-2 px-3 justify-between">
                 <div className="flex items-center h-6 gap-2">
                     <Image 
-                        className="rounded-full"
+                        className="rounded-full w-7.5 h-7.5 object-cover object-center"
                         src={post.author.image ?? "/generals/profile.svg"}
                         alt={"author picture"} 
                         width={30} 
-                        height={30} />
+                        height={30} 
+                        />
                     
                     <h1 className="text-sm font-medium h-5">{post.author.username ?? "Matheus Felipe"}</h1>
                     <p className="text-xs h-5 flex items-center gap-2">

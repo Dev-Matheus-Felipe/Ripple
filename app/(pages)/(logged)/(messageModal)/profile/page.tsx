@@ -1,10 +1,9 @@
-import { ProfileComponent } from "@/components/profile/profileComponent";
 import { GetMyUserData } from "@/lib/actions/profile/getMyUserData";
 import { auth } from "@/lib/auth";
-import { prisma } from "@/lib/prisma";
 import { MyProfileData } from "@/lib/types/myProfileData";
 import { Bookmark, Film, Grid3X3, Pencil } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Profile() {
   const session = await auth();
@@ -26,7 +25,7 @@ export default async function Profile() {
             width={150} 
             height={150} 
             alt="profile picture"
-            className="rounded-full" />
+            className="rounded-full w-37.5 h-37.5 object-cover object-center" />
 
             <div className="w-37.5 h-37.5 group-hover:flex hidden absolute top-0 left-0 rounded-full bg-[rgba(118,118,118,0.33)]">
               <Pencil size={25} className=" absolute top-1/2 left-1/2 -translate-1/2" color="white" />
@@ -37,9 +36,9 @@ export default async function Profile() {
           <div className="flex gap-3 items-center">
             <h1 className="text-lg pr-10">{userData.username}</h1>
 
-            <button className={titleButtons}>
+           <Link className={titleButtons} href="/profile/edit">
               Edit Profile
-            </button>
+          </Link>
 
             <button className={titleButtons}>
               Exit

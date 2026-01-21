@@ -126,7 +126,7 @@ export function DesktopSidebar({session} : {session: Session | null}){
                                     alt="profile picture"
                                     width={30}
                                     height={30}
-                                    className="rounded-full min-w-7.5" />
+                                    className="rounded-full min-w-7.5  h-7.5 object-cover object-center" />
                             </div>
 
                             <h1 className={linkStles("/profile")}>Profile</h1>
