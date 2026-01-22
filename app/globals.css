@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 @theme{
   --breakpoint-sidebar: 1030px;
@@ -7,39 +10,35 @@
   --breakpoint-b500: 500px;
 }
 
-@theme inline {
-
-}
+@theme inline { }
 
 body{
   background-color: var(--primary-background);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-
-:root{
-
+:root {
+  --radius: 10px;
 }
-
-
 
 /* --------------------------------------- DARK THEME --------------------------------------- */
 
 .dark{
   --text-primary-color: white;
-  
+
   --primary-color: rgb(171, 171, 171);
   --primary-background: rgb(12, 16, 20);
   --button-hover: #1c1e21;
 
   --secondary-button: #25292E;
   --third-button: #555;
-  
+
   --modal-post-title: #0c1014;
   --modal-post-background: #1b1e21;
   --modal-border-b: #343434;
 
   --modal-post-border: #1b1e21;
+
 }
 
 /* --------------------------------------- LIGHT THEME --------------------------------------- */
@@ -60,9 +59,7 @@ body{
 
 }
 
-
 /* --------------------------------------- SCROLL --------------------------------------- */
-
 
 ::-webkit-scrollbar {
   width: 8px;          /* largura da barra */

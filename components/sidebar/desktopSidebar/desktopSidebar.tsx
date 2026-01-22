@@ -1,4 +1,5 @@
 "use client"
+
 import { Compass, Heart, House, Menu, Search, Send, SquarePlay } from "lucide-react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -29,6 +30,11 @@ export function DesktopSidebar({session} : {session: Session | null}){
     useEffect(()=>{ 
         setMounted(true);
     },[])
+
+    useEffect(() => {
+        console.log("SESSION IMAGE:", session?.user?.image);
+    }, [session?.user?.image]);
+
 
     if(!mounted || !session) return null;
 

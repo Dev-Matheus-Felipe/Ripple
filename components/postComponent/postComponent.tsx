@@ -8,6 +8,7 @@ import { Post } from "@/lib/types/post";
 import Image from "next/image";
 import { HomePostsType } from "../contexts/viewPost";
 import Link from "next/link";
+import { DescriptionPost } from "./descriptionPost";
 
 export function PostComponent({
     post, 
@@ -55,8 +56,8 @@ export function PostComponent({
                         height={30} 
                         />
                     
-                    <h1 className="text-sm font-medium h-5">{post.author.username ?? "Matheus Felipe"}</h1>
-                    <p className="text-xs h-5 flex items-center gap-2">
+                    <h1 className="text-sm font-medium">{post.author.username ?? "Undefined User"}</h1>
+                    <p className="text-xs gap-2">
                         • {postDate}
                     </p>
                 </div>
@@ -110,17 +111,7 @@ export function PostComponent({
                 <Bookmark size={20} className="cursor-pointer" />
             </div>
 
-            <div className="flex justify-between pt-1 px-4">
-                <p className="text-sm">{post.description}...</p>
-                
-                <div className="flex gap-2 text-sm text-[#6236c8]">
-                    {
-                        post.tags.map((tag: string, index: number) => (
-                            <p key={index}>#{tag}</p>
-                        ))
-                    }
-                </div>
-            </div>
+           <DescriptionPost description={post.description} tags={post.tags} />
         </div>
     )
 }

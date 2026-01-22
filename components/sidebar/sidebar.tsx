@@ -1,11 +1,9 @@
-"use client"
-
 import { DesktopSidebar } from "./desktopSidebar/desktopSidebar";
-import { useSession } from "next-auth/react";
 import { MobileSidebar } from "./mobileSidebar/mobileSidebar";
+import { auth } from "@/lib/auth";
 
-export function Sidebar(){
-    const {data: session} = useSession();
+export async function Sidebar(){
+    const session = await auth();
 
     return (
         <>

@@ -4,9 +4,10 @@ import { EditFormPayload } from "@/components/profile/editForm";
 import { EditFormPayloadSchema } from "./zodEditform";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
 
 
-export async function EditFormAction({data} : {data: EditFormPayload}){
+export async function EditFormAction({data} : {data: EditFormPayload}): Promise<{state: boolean, message: string}> {
     const session = await auth();
     if(!session?.user?.id) return {state: false, message: "Not authenticated"};
 
@@ -21,6 +22,7 @@ export async function EditFormAction({data} : {data: EditFormPayload}){
             data: {...validatedData.data}
         })
 
+        revalidatePath("/profile") 
         return {state: true, message: "Saved sucessuflly"};
 
     }catch{

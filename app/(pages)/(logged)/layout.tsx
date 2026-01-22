@@ -3,7 +3,7 @@ import { Sidebar } from "@/components/sidebar/sidebar";
 import { SessionProvider } from "next-auth/react";
 import React, { Suspense } from "react";
 
-export default function MainLayout({children, modal} : {children: React.ReactNode, modal: React.ReactNode}){
+export default  function MainLayout({children, modal} : {children: React.ReactNode, modal: React.ReactNode}){
     return (
         <PostContext>
                 <div className="flex relative md:flex-row flex-col">

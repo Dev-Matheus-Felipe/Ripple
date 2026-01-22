@@ -1,3 +1,5 @@
+"use client"
+
 import { useContext, useState } from "react";
 import { Heart, House, Plus, Send, SquarePlay, Search } from "lucide-react";
 import { CreatePostContext } from "@/components/contexts/createPost";
@@ -30,7 +32,7 @@ export function MobileSidebar({session} : {session: Session | null}){
                 <h1 className="text-2xl">Ripple</h1>
 
                 <button className={`cursor-pointer`}>
-                    <Heart size={icon_size}/>
+                    <Heart size={icon_size} />
                 </button>
             </div>
 

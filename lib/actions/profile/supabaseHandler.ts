@@ -1,23 +1,39 @@
 'use client'
 
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase"
 
-export async function uploadImageSupabase({file, userId}: {file: File, userId: string}){
-    if(!(file instanceof File)) throw new Error("Arquivo inválido")
+export async function uploadImageSupabase({
+  file,
+  userId,
+}: {
+  file: File
+  userId: string
+}) {
+  if (!(file instanceof File)) {
+    throw new Error("Arquivo inválido")
+  }
 
-    const filePath = `/profilePicture/${userId}`;
+  const filePath = `profilePicture/${userId}`
+  const bucket = supabase.storage.from("Ripple")
 
-    const {error} = await supabase.storage
-        .from("Ripple")
-        .upload(filePath, file, {
-            contentType: file.type,
-            cacheControl: '3600',
-            upsert: true
-        })
+  let { error } = await bucket.upload(filePath, file, {
+    contentType: file.type,
+    cacheControl: "3600",
+  })
 
-    if (error) throw new Error('Upload failed');
+  if (error) {
+    const updateResult = await bucket.update(filePath, file, {
+      contentType: file.type,
+      cacheControl: "3600",
+    })
 
-    const { data } = supabase.storage.from("Ripple").getPublicUrl(filePath);
+    if (updateResult.error) {
+      console.error(updateResult.error)
+      throw updateResult.error
+    }
+  }
 
-    return data.publicUrl;
+  const { data } = bucket.getPublicUrl(filePath)
+
+  return `${data.publicUrl}?t=${Date.now()}`
 }

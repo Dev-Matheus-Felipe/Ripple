@@ -6,8 +6,10 @@ import { EditFormSchema } from "@/lib/actions/profile/zodEditform";
 import { ProfileEditForm } from "@/lib/types/profileEditForm";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { default as Img } from "next/image"
+import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export type EditFormValues = {
     image: string | File,
@@ -52,6 +54,7 @@ export function EditForm({user} : {user: ProfileEditForm}){
 
     const [preview, setPreview] = useState<string | null>();
 
+
     const name = watch("name");
     const username = watch("username");
 
@@ -61,13 +64,12 @@ export function EditForm({user} : {user: ProfileEditForm}){
         if (!file) return;
 
         else if(!FileTypes.some(e => e === file?.type.toLocaleLowerCase())){
-            console.log("Unsupported file");
+            toast.warning("Unsupported file");
             return;
 
         }else if(file.size >  1024 * 1024 * 30){
-            console.log("File size exceeds the limit")
+            toast.warning("File size exceeds the limit");
             return;
-
         }
 
         const url = URL.createObjectURL(file);
@@ -85,27 +87,40 @@ export function EditForm({user} : {user: ProfileEditForm}){
         let imageUrl: string | null = null;
 
         if(data.image instanceof File){
+            toast.loading("Saving image...", {id: "loading"});
+
             const file = data.image;
             imageUrl = await uploadImageSupabase({file: file, userId: user.id});
-        
+            
+            if(imageUrl) toast.success("Image saved!", {id: "loading"});
+
         }else{
             imageUrl = data.image
         }
 
+        const cacheBustedImage =
+            imageUrl ? `${imageUrl}?v=${Date.now()}` : null;
+
+        if(!cacheBustedImage) return;
+
         const newData: EditFormPayload = {...data, image: imageUrl};
 
+        toast.loading("Saving data...", {id: "data"});
         const result = await EditFormAction({data: newData});
 
-        console.log(result.message);
+        if(result && result.message){
+            toast.success("Data saved sucessfully", {id: "data"});
+            redirect("/profile");
+        
+        }else toast.error(result.message, {id: "data"});
     }
-
 
     return (
          <div className="w-full flex flex-col lg:p-20 lg:pt-15 items-center p-3 pt-10 gap-10 md:pb-0!">
             <div className="flex justify-between  items-center md:max-w-150 w-full">
                 <h1 className="text-2xl font-bold">Edit Profile</h1>
                 <button className={`b500:hidden block bg-linear-to-r from-[#512da8] to-[#6236c8] rounded-sm cursor-pointer w-25 
-                text-sm h-10`}>
+                text-sm h-10 text-white`}>
                     Save Changes
                 </button>
             </div>
@@ -169,7 +184,7 @@ export function EditForm({user} : {user: ProfileEditForm}){
                     { errors.bio && <p className="text-red-500 text-xs">{errors.bio.message}</p> }
                 </div>
 
-                <button className={`b500:block hidden bg-linear-to-r from-[#512da8] to-[#6236c8] 
+                <button className={`b500:block hidden bg-linear-to-r from-[#512da8] to-[#6236c8]  text-white
                 rounded-sm cursor-pointer w-24 text-xs b500:h-10 h-0`}>
                     Save Changes
                 </button>
