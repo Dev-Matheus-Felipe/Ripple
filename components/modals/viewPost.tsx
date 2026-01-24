@@ -4,20 +4,17 @@ import { CheckFollower } from "@/lib/actions/post/checkFollower"
 import { X } from "lucide-react"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
-import { useContext, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { CreateResponse } from "../forms/createResponse"
 import { Response as ResponesComponent } from "../response/response"
-import { CreatePostViewContext } from "../contexts/viewPost"
 import { useRouter } from "next/navigation"
+import { Post } from "@/lib/types/post"
 
-export function ViewPostModal({ postId }: { postId: string }) {
-    const ctx = useContext(CreatePostViewContext);
+export function ViewPostModal({ post }: { post: Post }) {
     const { data: session } = useSession();
     const router = useRouter();
 
     const [isFollower, setIsFollower] = useState(false);
-
-    const post = ctx?.state.posts.find(p => p.id === postId)
 
     useEffect(() => {
         if (!post) return
@@ -32,9 +29,8 @@ export function ViewPostModal({ postId }: { postId: string }) {
         run()
     }, [post])
 
-    if (!session?.user || !ctx || !post) return null
+    if (!session?.user ) return null
 
-    const { setState } = ctx;
 
     return (
 

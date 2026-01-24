@@ -22,29 +22,8 @@ export async function GetMyUserData({ userId }: { userId: string }) {
         },
       },
 
-      posts: {
-        include: {
-            responses: {
-              select: {
-                id: true,
-                content: true,
-                createdAt: true,
-                likes: true,
-                postId: true,
-                authorId: true,
-
-                author: {
-                  select: {
-                    id: true,
-                    username: true,
-                    image: true
-                  }
-                }
-              }
-            }
-        }
-      }
-
+      posts: true
+    
     },
   })
 

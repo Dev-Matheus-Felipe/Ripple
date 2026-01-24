@@ -48,7 +48,7 @@ body{
 
   --primary-color: rgb(0, 0, 0);
   --primary-background: rgb(255, 255, 255);
-  --button-hover: #ccc;
+  --button-hover: #e0e0e0;
 
   --secondary-button: rgb(227, 227, 227);
   --third-button: rgb(210, 210, 210);

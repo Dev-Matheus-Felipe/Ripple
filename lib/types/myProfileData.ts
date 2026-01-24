@@ -5,17 +5,6 @@ export type ResponseAuthor = {
 }
 
 
-export type UserPostResponse = {
-  id: string
-  content: string
-  createdAt: Date
-  likes: string[]
-  postId: string
-  authorId: string
-  author: ResponseAuthor
-}
-
-
 export type Post = {
   id: string
   description: string
@@ -27,7 +16,6 @@ export type Post = {
   createdAt: Date
   authorId: string
   likes: string[]
-  responses: UserPostResponse[]
 }
 
 export type SavedPost = {

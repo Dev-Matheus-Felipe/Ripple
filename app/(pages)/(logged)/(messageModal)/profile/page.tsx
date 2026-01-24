@@ -1,7 +1,8 @@
+import { PostsProfile } from "@/components/profile/postsProfile";
 import { GetMyUserData } from "@/lib/actions/profile/getMyUserData";
 import { auth } from "@/lib/auth";
 import { MyProfileData } from "@/lib/types/myProfileData";
-import { Bookmark, Film, Grid3X3, Menu, Pencil } from "lucide-react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -70,20 +71,7 @@ export default async function Profile() {
       </div>
 
 
-      <div className="border-b b500:mt-35 mt-15 border-(--modal-border-b) w-full h-10 flex justify-around">
-        <div className="border-b-2 w-12 flex justify-center">
-          <Grid3X3 size={26}  />
-        </div>
-
-        <div className="">
-          <Film size={26} color="var(--primary-color)" />
-        </div>
-        
-        <div className="">
-          <Bookmark  size={26} color="var(--primary-color)" />
-        </div>
-       
-      </div>
+      <PostsProfile userData={userData} />
      
     </div>
   );

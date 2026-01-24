@@ -31,20 +31,15 @@ export function DesktopSidebar({session} : {session: Session | null}){
         setMounted(true);
     },[])
 
-    useEffect(() => {
-        console.log("SESSION IMAGE:", session?.user?.image);
-    }, [session?.user?.image]);
-
-
     if(!mounted || !session) return null;
 
-    const linkStles = (link: string) => `${pathname === link ? "font-bold" : "text-(--primary-color)"} `;
+    const linkStles = (link: string) => `${pathname === link ? "font-semibold" : "font-normal text-(--primary-color)"} `;
 
     const container_button = (selected?: string ) => `p-2 rounded-md cursor-pointer 
         ${isPop.some(e => e === popUp) && "hover:bg-(--button-hover)"} 
         ${selected === popUp && "bg-(--button-hover)"} `;
     
-    const container_link = `flex gap-3 h-13 items-center cursor-pointer rounded-sm pl-2 w-full
+    const container_link = `flex gap-3 h-13 items-center cursor-pointer rounded-sm pl-2 w-full font-normal
         ${!isPop.some(e => e === popUp) && "hover:bg-(--button-hover)"}`;
 
     return (

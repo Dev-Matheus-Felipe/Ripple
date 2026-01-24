@@ -56,9 +56,9 @@ export function PostComponent({
                         height={30} 
                         />
                     
-                    <h1 className="text-sm font-medium">{post.author.username ?? "Undefined User"}</h1>
-                    <p className="text-xs gap-2">
-                        • {postDate}
+                    <h1 className="text-sm font-medium h-5">{post.author.username ?? "Undefined User"}</h1>
+                    <p className="text-xs gap-2 h-5 flex items-end text-(--primary-color)">
+                        {postDate}
                     </p>
                 </div>
 
