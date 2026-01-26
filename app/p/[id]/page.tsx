@@ -22,7 +22,7 @@ export default async function PostModal({params} : {params: {id: string}}){
             <div className="flex flex-1 items-center justify-center">
                 <div className="border border-[#1b1e21] max-w-290 h-160 rounded-md relative flex">
                         <div className={`${post.sizeX < post.sizeY ? "min-w-120 max-w-200" : "w-200"}
-                        h-full relative flex items-center justify-center`}>
+                        h-full relative flex items-center justify-center border-r border-[#1b1e21]`}>
                             {
                                 post.visualType.startsWith("video/")
                                     ? <video

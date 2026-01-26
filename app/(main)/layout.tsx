@@ -10,6 +10,7 @@ export default  function MainLayout({children, modal} : {children: React.ReactNo
                     <SessionProvider>
                         <Sidebar />
                     </SessionProvider>
+
                     {modal}
 
                     <div className="w-full h-screen overflow-auto">

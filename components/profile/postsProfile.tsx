@@ -4,7 +4,7 @@ import { MyProfileData, Post, SavedPost } from "@/lib/types/myProfileData";
 import { Bookmark, Clapperboard, Film, Grid3X3 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type PostsState = {
     status: "posts" | "savedPosts" | "videos",
@@ -12,7 +12,7 @@ type PostsState = {
 }
 
 const iconStyle = "border-b-2 w-12 flex justify-center";
-const visualStyle = "cursor-pointer max-w-60 max-h-100";
+const visualStyle = "cursor-pointer w-60 h-80  object-cover";
 
 export function PostsProfile({userData} : {userData: MyProfileData}){
     const [posts, setPosts] = useState<PostsState>({
@@ -37,8 +37,6 @@ export function PostsProfile({userData} : {userData: MyProfileData}){
 
         setPosts({ status, posts })
     }
-
-
 
     return (
         <div className="w-full flex flex-col">

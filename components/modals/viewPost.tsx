@@ -8,12 +8,13 @@ import { useEffect, useState } from "react"
 import { CreateResponse } from "../forms/createResponse"
 import { Response as ResponesComponent } from "../response/response"
 import { useRouter } from "next/navigation"
-import { Post } from "@/lib/types/post"
+import { Post, Response } from "@/lib/types/post"
 
 export function ViewPostModal({ post }: { post: Post }) {
     const { data: session } = useSession();
     const router = useRouter();
 
+    const [messages, setMessages] = useState<Response[]>(post.responses);
     const [isFollower, setIsFollower] = useState(false);
 
     useEffect(() => {
@@ -71,12 +72,15 @@ export function ViewPostModal({ post }: { post: Post }) {
                             width={40} 
                             height={40} />
 
-                        <h1 className="text-sm">{post.author.username ?? "Matheus Felipe"}</h1>
+                        <h1 className="text-sm">{post.author.username ?? "Undefined User"}</h1>
 
-                        <button className={`text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
-                        rounded-md cursor-pointer text-white`}>
-                            {isFollower ? "Following" : "Follow"} 
-                        </button>
+                        {
+                            session.user.id !== post.authorId && 
+                                <button className={`text-[13px] px-3 py-1 bg-linear-to-r from-[#512da8] to-[#6236c8] 
+                                rounded-md cursor-pointer text-white`}>
+                                    {isFollower ? "Following" : "Follow"} 
+                                </button>
+                        }
                     </div>
 
                     <div className="text-xs p-4 h-[75%] flex flex-col gap-8 overflow-auto">
@@ -84,13 +88,12 @@ export function ViewPostModal({ post }: { post: Post }) {
                             post.responses.length === 0 
                                 ? "No Comments yet."
                                 
-                                : post.responses.map((response) => (
+                                : messages.map((response) => (
                                     <ResponesComponent 
                                         response={response} 
                                         key={response.id} 
-                                        setState={setState}
-                                        userId={session.user?.id} 
-                                        postId={post.id} /> ))
+                                        setMessages={setMessages}
+                                        userId={session.user?.id} /> ))
                                 
                         }
                     </div>
@@ -103,7 +106,7 @@ export function ViewPostModal({ post }: { post: Post }) {
                             width={40} 
                             height={40} />
 
-                        <CreateResponse post={post} setState={setState} />
+                        <CreateResponse post={post} setMessages={setMessages} />
                     </div>
                 </div>
             </div>

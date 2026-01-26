@@ -1,5 +1,6 @@
 "use client"
 
+import { Register } from "@/lib/actions/register/register";
 import { ResgisterCode } from "@/lib/actions/register/registerCode";
 import { signIn, signOut } from "next-auth/react";
 import { useForm } from "react-hook-form";
@@ -15,7 +16,18 @@ export default  function Login() {
 
   const enviar = async(data: DataType) => {
     const result = await ResgisterCode(data); 
-    
+    console.log(result)
+  }
+
+  const login = async() => {
+
+    const a = await signIn("credentials", {
+      email: "rippleproject74@gmail.com",
+      password: "mat1234567",
+      redirect: false,
+    });
+
+    console.log(a);
   }
   
   return (
@@ -27,13 +39,17 @@ export default  function Login() {
         <button type="submit">Enviar</button>
       </form>
 
-      <button onClick={async() => {
-        const result2 = await signIn("github");
-
-        console.log(result2)
-      }}>LOGIN</button>
+      <button onClick={async(cu) => {
+        cu.preventDefault();
+        await login();
+      }} type="button">LOGIN</button>
       < br />
       <button onClick={() => signOut()}>SIGN OUT</button>
     </>
   );
 }
+
+/**
+ * 
+ * 
+ */

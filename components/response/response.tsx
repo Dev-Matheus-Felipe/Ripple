@@ -5,18 +5,15 @@ import { Response as ResponseType } from "@/lib/types/post";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import { Dispatch } from "react";
-import { HomePostsType } from "../contexts/viewPost";
 
 export function Response({
     response,
-    postId,
     userId,
-    setState,
+    setMessages,
 }: {
     response: ResponseType;
-    postId: string;
     userId: string | undefined;
-    setState: Dispatch<React.SetStateAction<HomePostsType>>;
+    setMessages: Dispatch<React.SetStateAction<ResponseType[]>>;
 }) {
     const isLiked = !!userId && response.likes.includes(userId);
 
@@ -25,26 +22,12 @@ export function Response({
 
         const hasLiked = await ToLikeResponse({ response: response });
 
-        setState(prev => ({
-            ...prev,
-            posts: prev.posts.map(post => {
-                if (post.id !== postId) return post;
-
-                return {
-                    ...post,
-                    responses: post.responses.map(res =>
-                        res.id === response.id
-                            ? {
-                                  ...res,
-                                  likes: hasLiked
-                                      ? res.likes.filter(id => id !== userId)
-                                      : [...res.likes, userId],
-                              }
-                            : res
-                    ),
-                };
-            }),
-        }));
+        setMessages(res => ({
+            ...res,
+            likes: hasLiked
+                ? res.filter(id => id.id !== userId)
+                : [...res, userId]
+        }))
     };
 
     return (

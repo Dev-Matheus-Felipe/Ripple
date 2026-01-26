@@ -43,7 +43,7 @@ export function DesktopSidebar({session} : {session: Session | null}){
         ${!isPop.some(e => e === popUp) && "hover:bg-(--button-hover)"}`;
 
     return (
-        <div className="w-60 z-10 md:flex hidden">
+        <div className={`z-10 md:flex hidden ${pathname === "/messages" ? "w-17" : "w-60"}`}>
             <div className={`flex flex-col justify-between h-screen items-center pt-10 pb-5 duration-400 border-[#363636] z-10
             ${!isPop.some(e => e === popUp) ? (popUp !== "/profile" && pathname !== "/profile") ? "w-60 border-r" : "w-60" : "w-17"} 
             bg-(--primary-background)`}>
@@ -135,9 +135,9 @@ export function DesktopSidebar({session} : {session: Session | null}){
                     </div>
                 </div>  
 
-                <div className="w-[88%] h-13  gap-2 relative overflow-hidden">
+                <div className="w-[88%] h-13  gap-2 relative overflow-hidden ">
                     <button 
-                        className={`w-60 h-full flex items-center cursor-pointer rounded-sm pl-5 duration-300
+                        className={`w-60 h-full flex items-center cursor-pointer rounded-sm pl-2 duration-300
                         ${!isPop.some(e => e === popUp) ? "hover:bg-(--button-hover) gap-2" : "gap-5"} `}
                         onClick={() =>  setTheme(theme === "dark" ? "light"  : "dark")}>
 

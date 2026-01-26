@@ -15,7 +15,7 @@ export async function Register({code} : {code: string}): Promise<Resgister> {
   if(!userCookie) return {status: false, message: "Cookie not found!"};
 
   const parsedUser: {email: string} = JSON.parse(userCookie.value);
-
+  
   const pendingUser = await prisma.pendingUser.findUnique({where: {email: parsedUser.email} });
   if(!pendingUser) return {status: false, message: "User not found!" };
 

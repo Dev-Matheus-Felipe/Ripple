@@ -5,8 +5,9 @@ import { redirect } from "next/dist/server/api-utils";
 export default async function proxy(request: NextRequest){
     const session = await auth();
 
-    /*
     
+  /**
+      
     return (request.nextUrl.pathname == "/login")
         ? session
             ? NextResponse.redirect(new URL("/", request.nextUrl))
@@ -16,8 +17,9 @@ export default async function proxy(request: NextRequest){
             ? NextResponse.next()
             : NextResponse.redirect(new URL("/login", request.nextUrl))
 
-    */
+    
 
+   */
 }
 
 

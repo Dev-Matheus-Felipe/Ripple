@@ -4,6 +4,8 @@ import { PostSchema } from './zodPost'
 import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
 import { newPostType } from '@/components/forms/createPost'
+import { supabaseServer } from '@/lib/supabase/server'
+import { GetUniquePost } from '../post/getPosts'
 
 export async function NewPostAction({
   preview,
@@ -26,7 +28,7 @@ export async function NewPostAction({
   
 
   try {
-    await prisma.post.create({
+    const newPost = await prisma.post.create({
       data: {
         ...validated.data,
         visual: preview.file,
@@ -37,7 +39,20 @@ export async function NewPostAction({
       },
     })
 
+    const fullPost = await GetUniquePost({id: newPost.id })
+
+    // backend — enviar evento (depois de salvar no MongoDB)
+  await supabaseServer
+    .channel(`post`)
+    .send({
+      type: "broadcast",
+      event: "new-message",
+      payload: fullPost,
+    })
+
+
     return { status: true };
+    
   } catch (error) {
 
     return { status: false, message: 'Database error' };

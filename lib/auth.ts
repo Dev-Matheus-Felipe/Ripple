@@ -73,7 +73,7 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
 
     callbacks: {
         async signIn({user}){
-            return (!user.email || !user.name) ? false : true;
+            return (!user.email) ? false : true;
         },
         
         async jwt({token, account}){
@@ -90,6 +90,7 @@ export const {handlers,signIn, signOut, auth } = NextAuth({
                     id: user.id,
                     email: user.email,
                     image: user.image,
+                    name: user.name,
                     emailVerified: user.emailVerified,
                 };
             }
