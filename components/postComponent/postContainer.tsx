@@ -38,22 +38,7 @@ export function PostContainer({initialPosts} : {initialPosts: Post[]}){
     },[])
 
 
-    useEffect(() => {
-        const channel = supabase
-            .channel("post")
-            .on("broadcast", { event: "new-message" }, ({ payload }) => {
-            setState(prev => ({
-                ...prev,
-                posts: [...prev.posts, payload],
-            }))
-            })
 
-        channel.subscribe()
-
-        return () => {
-            supabase.removeChannel(channel)
-        }
-    }, [])
 
 
 

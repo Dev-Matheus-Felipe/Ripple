@@ -141,7 +141,6 @@ model Message {
 
   content        String
   createdAt      DateTime @default(now())
-  editedAt       DateTime?
 
   conversationId String
   senderId       String

@@ -41,16 +41,6 @@ export async function NewPostAction({
 
     const fullPost = await GetUniquePost({id: newPost.id })
 
-    // backend — enviar evento (depois de salvar no MongoDB)
-  await supabaseServer
-    .channel(`post`)
-    .send({
-      type: "broadcast",
-      event: "new-message",
-      payload: fullPost,
-    })
-
-
     return { status: true };
     
   } catch (error) {
