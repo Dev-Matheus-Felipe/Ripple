@@ -124,6 +124,9 @@ model Conversation {
   userAId   String
   userBId   String
 
+  unreadA  Int @default(0)
+  unreadB  Int @default(0)
+
   createdAt DateTime @default(now())
 
   userA User @relation("UserAConversations", fields: [userAId], references: [id], onDelete: Cascade)

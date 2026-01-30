@@ -4,16 +4,15 @@ import { PostSchema } from './zodPost'
 import { prisma } from '@/lib/prisma'
 import { auth } from '@/lib/auth'
 import { newPostType } from '@/components/forms/createPost'
-import { supabaseServer } from '@/lib/supabase/server'
 import { GetUniquePost } from '../post/getPosts'
 
 export async function NewPostAction({
   preview,
-  data,
+  data
 }: {
   preview: { file: string; type: string, width: number, height: number }
   data: newPostType
-}) {
+}){
 
   const validated = PostSchema.safeParse(data);
 

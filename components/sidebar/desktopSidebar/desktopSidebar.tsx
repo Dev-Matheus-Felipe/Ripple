@@ -43,7 +43,7 @@ export function DesktopSidebar({session} : {session: Session | null}){
         ${!isPop.some(e => e === popUp) && "hover:bg-(--button-hover)"}`;
 
     return (
-        <div className={`z-10 md:flex hidden ${pathname === "/messages" ? "w-17" : "w-60"}`}>
+        <div className={`z-10 md:flex hidden ${pathname.includes("/messages") ? "w-17" : "w-60"}`}>
             <div className={`flex flex-col justify-between h-screen items-center pt-10 pb-5 duration-400 border-[#363636] z-10
             ${!isPop.some(e => e === popUp) ? (popUp !== "/profile" && pathname !== "/profile") ? "w-60 border-r" : "w-60" : "w-17"} 
             bg-(--primary-background)`}>

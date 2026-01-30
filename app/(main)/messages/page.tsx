@@ -9,9 +9,5 @@ export default async function Messages() {
 
   const initialMessages: ConversationsType[] = await GetInitialMessages({userId: session.user.id});
 
-  return (
-    <div className="w-full h-screen ">
-      <MessagesComponnet initialMessages={initialMessages} user={session.user} />
-    </div>
-  );
+  return <MessagesComponnet initialMessages={initialMessages} user={session.user} />;
 }

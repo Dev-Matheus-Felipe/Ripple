@@ -1,11 +1,10 @@
 "use client"
 
 import { FindUser } from "@/lib/actions/messages/findUser"
-import { ConversationsType, MessagesType } from "@/lib/actions/messages/getInitialMessages"
+import { ConversationsType } from "@/lib/actions/messages/getInitialMessages"
 import { supabase } from "@/lib/supabase/client"
-import { Search, Send } from "lucide-react"
+import { Search } from "lucide-react"
 import { User } from "next-auth"
-import Image from "next/image"
 import { useEffect, useState } from "react"
 import { UsersContainer } from "./usersContainet"
 import { Conversation } from "./conversation"
@@ -13,7 +12,7 @@ import { Conversation } from "./conversation"
 export type UserFoundType = {
   name: string,
   username: string | null,
-  image: string | null
+  image: string | null,
 }
 
 export function MessagesComponnet({
@@ -40,28 +39,25 @@ export function MessagesComponnet({
         { event: "new-message" },
         ({ payload }) => {
             
-          const newMessage: MessagesType = payload.newMessage
-          const conversationId = newMessage.conversationId
+          const conversationId = payload.newMessage.conversationId;
 
           setConversations(prev => {
             const exists = prev.find(c => c.id === conversationId)
 
             if (exists) {
               return prev.map(c => {
-                if (c.id !== conversationId) return c
+                if (c.id !== conversationId) return c;
 
-                return {
-                  ...c,
-                  messages: [...c.messages, newMessage],
-                }
+                const userA = c.userAId === user.id;
+
+                return (userA) 
+                  ? {...c, unreadA: c.unreadA++} 
+                  : {...c, unreadA: c.unreadB++}
               })
             }
 
             return [
-              {
-                ...payload.conversation,
-                messages: [newMessage],
-              },
+              { ...payload.conversation },
               ...prev,
             ]
           })
@@ -89,7 +85,6 @@ export function MessagesComponnet({
   if(!user || !user.id) return null;
 
   return (
-    <div className="flex">
       <div className="w-90 h-screen border-r border-[#343434] py-[4%] px-[1%]">
         <div className="flex w-full flex-col gap-5">
           <h1 className="text-lg font-bold">{user.name}</h1>
@@ -112,8 +107,10 @@ export function MessagesComponnet({
           user={user} />
 
       </div>
-
-      <Conversation currentConversation={currentConversation} user={user} />
-    </div>
   )
 }
+
+
+/*      
+<Conversation currentConversation={currentConversation} user={user} />
+*/

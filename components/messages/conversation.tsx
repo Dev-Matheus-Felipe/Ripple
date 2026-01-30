@@ -2,6 +2,7 @@ import { ConversationsType } from "@/lib/actions/messages/getInitialMessages"
 import { Send, X } from "lucide-react"
 import { User } from "next-auth"
 import Image from "next/image"
+import { MessageContainer } from "./messageContainer"
 
 export function Conversation({
     currentConversation,
@@ -45,9 +46,8 @@ export function Conversation({
                     <X size={26} />
                 </div>
 
-                <div className="flex-1 overflow-y-auto">
+                <MessageContainer />
 
-                </div>
 
                 <form className="m-auto my-5 w-[95%] h-12 rounded-2xl border border-[#343434] px-5 relative pr-14">
                     <input type="text" className="w-full h-full outline-0 text-sm" />

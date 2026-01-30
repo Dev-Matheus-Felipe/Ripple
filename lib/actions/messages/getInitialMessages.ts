@@ -12,8 +12,13 @@ export type MessagesType = {
 
 export type ConversationsType = {
   id : string,
+
   userAId: string,
   userBId: string,
+
+  unreadA: number,
+  unreadB: number,
+
   createdAt: Date,
 
   userA: {
@@ -27,8 +32,6 @@ export type ConversationsType = {
     name: string,
     username: string | null
   },
-
-  messages: MessagesType[]
 
 }
 
@@ -58,7 +61,6 @@ export const GetInitialMessages = async({userId} : {userId: string}) => {
                 }
             },
 
-            messages: true
         }
     });
 
