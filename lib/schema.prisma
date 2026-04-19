@@ -1,0 +1,254 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/* 
+    This is the database schema, needed for prisma to know the right functions to handle it, There are only the tables 
+we'll need for the project. ANY changes must be commented here !
+
+
+    PendingUser Table is responsable for saving user data while they're verifying their emails to send the correct code,
+it will be deleted after receving the right response. All the others are normal tables
+
+*/
+
+/* ------------------------------------ PENDING USER ------------------------------------ */
+
+model PendingUser {
+  id        String   @id @default(cuid()) @map("_id")
+
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  code      String
+  name      String
+  email     String   @unique
+  password  String
+  attempts  Int
+}
+
+
+/* ------------------------------------ USERS ------------------------------------ */
+
+model User {
+  id        String  @id @default(cuid()) @map("_id")
+
+  name      String
+  username  String? @unique
+  email     String  @unique
+  password  String?
+
+  image     String?
+  bio       String?
+
+  emailVerified DateTime?
+  createdAt DateTime  @default(now())
+  bannedAt  DateTime?
+
+  accounts Account[]
+  sessions Session[]
+
+  posts     Post[]
+  responses Response[]
+
+  messagesSent Message[]
+
+  conversations ConversationParticipant[]
+
+  followers Follow[] @relation("followers")
+  following Follow[] @relation("following")
+
+  likes Like[]
+}
+
+
+/* ------------------------------------ FOLLOW ------------------------------------ */
+
+
+model Follow {
+  id          String   @id @default(cuid()) @map("_id")
+
+  followerId  String
+  followingId String
+
+  createdAt   DateTime @default(now())
+
+  follower  User @relation("following", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("followers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+
+/* ------------------------------------ POSTS ------------------------------------ */
+
+
+model Post {
+  id          String   @id @default(cuid()) @map("_id")
+
+  description String
+  createdAt   DateTime @default(now())
+
+  authorId    String
+  author      User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+
+  media       Media[]
+  tags        String[]
+
+  likes       Like[]
+  responses   Response[]
+
+  @@index([authorId])
+}
+
+
+/* ------------------------------------ MEDIA INFO ------------------------------------ */
+
+model Media {
+  id        String @id @default(cuid()) @map("_id")
+
+  url       String
+  type      String // "image" | "video"
+
+  width     Int?
+  height    Int?
+
+  postId    String
+  post      Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([postId])
+}
+
+
+/* ------------------------------------ LIKES ------------------------------------ */
+
+model Like {
+  id        String   @id @default(cuid()) @map("_id")
+
+  userId    String
+  postId    String
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, postId])
+  @@index([userId])
+  @@index([postId])
+}
+
+
+/* ------------------------------------ POSTS RESPONSES  ------------------------------------ */
+
+model Response {
+  id        String   @id @default(cuid()) @map("_id")
+
+  content   String
+  createdAt DateTime @default(now())
+
+  authorId  String
+  postId    String
+
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([authorId])
+  @@index([postId])
+}
+
+
+
+/* ------------------------------------ CONVERSATION HANDLER ( BETA ) ------------------------------------ */
+
+model Conversation {
+  id        String   @id @default(cuid()) @map("_id")
+  createdAt DateTime @default(now())
+
+  participants ConversationParticipant[]
+  messages     Message[]
+}
+
+
+model ConversationParticipant {
+  id             String @id @default(cuid()) @map("_id")
+
+  userId         String
+  conversationId String
+
+  unreadCount    Int @default(0)
+
+  user         User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, conversationId])
+  @@index([userId])
+  @@index([conversationId])
+}
+
+
+/* ------------------------------------ MESSAGES ------------------------------------ */
+
+model Message {
+  id             String   @id @default(cuid()) @map("_id")
+
+  content        String
+
+  createdAt      DateTime @default(now())
+
+  conversationId String
+  senderId       String
+
+  seenBy         String[]
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User        @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+  @@index([senderId])
+}
+
+
+/* ------------------------------------ OAUTH TABLES NEEDED ------------------------------------ */
+
+model Account {
+  id                String  @id @default(cuid()) @map("_id")
+  userId            String
+
+  type              String
+  provider          String
+  providerAccountId String
+
+  access_token      String?
+  refresh_token     String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(cuid()) @map("_id")
+
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
