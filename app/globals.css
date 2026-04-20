@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
 :root {
+  --p-color: #512da8;
+  --p-color-hover: #4527a0;
+
+  --l-primary-color: #5c6bc0;
 
 }
 
@@ -9,14 +13,42 @@
 }
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: var(--primary-background-color);
   font-family: Arial, Helvetica, sans-serif;
-  color: black;
 }
 
 
 @keyframes slideIn {
   0%,49.99% { opacity: 0; z-index: index 1; }
   50%,100%  { opacity: 1; z-index: index 5; }
+}
+
+.dark {
+  /* ----- AUTH -----  */ 
+  
+  --p-text-color: white;
+  --s-text-color: white;
+
+  --p-l-background-color: #0f1421;
+  --p-d-background-color: #0B0F1A;
+  --p-ll-background-color: #151b2b;
+
+  --input-background-color: #364153;
+  --icons-hover: rgba(54,65,83,0.6);
+}
+
+  
+.light {
+  /* ----- AUTH -----  */ 
+
+  --p-text-color: black;
+  --s-text-color: #1e2939;
+
+  --p-l-background-color: #e2e2e2;
+  --p-d-background-color: #c9d6ff;
+  --p-ll-background-color: white;
+
+  --input-background-color: #eee;
+  --icons-hover: #f9fafb;
+
 }
