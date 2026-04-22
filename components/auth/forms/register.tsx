@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterDataType, RegisterSchema } from "../validators/registerSchema";
 import { validateEmail } from "../serverActions/validateEmail";
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm({active, setActive} : {active: boolean, setActive: Dispatch<SetStateAction<boolean>>}){
     const {
@@ -15,16 +16,23 @@ export default function RegisterForm({active, setActive} : {active: boolean, set
         resolver: zodResolver(RegisterSchema)
     });
 
+    const router = useRouter();
+
     const handleSubmitForm  = async(data: RegisterDataType) => {
         const result = await validateEmail(data);
-    }
+
+        if(result.sucess)
+            router.push(`/auth?email=${result.email}`)
+        
+        else
+            console.log(result.message);
+    }   
 
     return (
         <div className={`absolute max-sm:w-full w-1/2 max-sm:flex flex-col inset-y-0 left-0  h-full transition-all duration-700 ease-in-out z-1 opacity-0
         ${active ? "sm:translate-x-full opacity-100 z-5 animate-slide-in" : ""}`}>
                 
             <form
-            
             onSubmit={handleSubmit(handleSubmitForm)}
             className="bg-(--p-ll-background-color) h-full flex flex-col items-center justify-center px-10 gap-0"
             >
@@ -51,8 +59,8 @@ export default function RegisterForm({active, setActive} : {active: boolean, set
 
             <button 
                 type="button"
-                onClick={() => setActive(false)}
-                className="sm:hidden pt-5 bg-(--p-ll-background-color) text-sm">
+                onClick={() => setActive(prev => !prev)}
+                className="sm:hidden pt-10 bg-(--p-ll-background-color) text-sm">
                 Don't have an account? Sign in</button>
 
             </form>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Suspense } from "react";
 
 
 export const metadata: Metadata = {
@@ -15,9 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-full">
+      <body className="min-h-full bg-linear-to-r from-(--p-l-background-color) to-(--p-d-background-color)
+      font-['Montserrat',sans-serif]">
+        
         <ThemeProvider attribute="class" defaultTheme="dark">
-          {children}
+          <Suspense>
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>

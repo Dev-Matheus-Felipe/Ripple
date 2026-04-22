@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import GhostBtn from "@/components/auth/buttons/ghostBtn";
 import RegisterForm from "@/components/auth/forms/register";
@@ -21,9 +21,7 @@ export default function AuthPage() {
 
         {/* ── Background ── */}
         <div className="
-            min-h-screen flex items-center justify-center
-            bg-linear-to-r from-(--p-l-background-color) to-(--p-d-background-color)
-            font-['Montserrat',sans-serif] p-[2%]">
+            min-h-screen flex items-center justify-center p-[4%]">
 
             {/* ── Card ── */}
             <div className={`relative overflow-hidden bg-(--p-ll-background-color) rounded-[30px]
