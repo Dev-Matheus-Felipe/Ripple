@@ -29,12 +29,12 @@ export default function RegisterForm({active, setActive} : {active: boolean, set
     }   
 
     return (
-        <div className={`absolute max-sm:w-full w-1/2 max-sm:flex flex-col inset-y-0 left-0  h-full transition-all duration-700 ease-in-out z-1 opacity-0
-        ${active ? "sm:translate-x-full opacity-100 z-5 animate-slide-in" : ""}`}>
+        <div className={`absolute max-md:w-full w-1/2 max-md:flex flex-col inset-y-0 left-0  h-full transition-all duration-200 
+        ${active ? "sm:translate-x-full opacity-100 z-9" : "z-1"} ease-in-out delay-200 `}>
                 
             <form
             onSubmit={handleSubmit(handleSubmitForm)}
-            className="bg-(--p-ll-background-color) h-full flex flex-col items-center justify-center px-10 gap-0"
+            className="bg-(--p-ll-background-color) h-full flex flex-col items-center justify-center md:px-10 px-5 gap-0" 
             >
 
             <h1 className="text-[26px] font-bold text-(--p-text-color)">Create Account</h1>

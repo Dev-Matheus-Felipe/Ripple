@@ -20,11 +20,10 @@ export default function AuthPage() {
         <style>{`@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');`}</style>
 
         {/* ── Background ── */}
-        <div className="
-            min-h-screen flex items-center justify-center p-[4%]">
+        <div className=" min-h-screen flex items-center justify-center p-[4%]">
 
-            {/* ── Card ── */}
-            <div className={`relative overflow-hidden bg-(--p-ll-background-color) rounded-[30px]
+            {/* ── Card ──  */}
+            <div className={`relative  bg-(--p-ll-background-color) rounded-[30px]  overflow-hidden
             shadow-[0_5px_15px_rgba(0,0,0,0.35)] w-3xl max-w-full sm:min-h-120 min-h-130`}>
 
                 {/* SIGN-UP */}
@@ -32,17 +31,13 @@ export default function AuthPage() {
 
                 {/* ── SIGN-IN ── */}
                 <LoginForm active={active} setActive={setActive} />
-
             {/* ── TOGGLE PANEL ── */}
-            <div className={`max-sm:hidden absolute top-0 left-1/2 w-1/2 h-full overflow-hidden z-1000 transition-all duration-700 ease-in-out
-            ${active ? "-translate-x-full rounded-[0_150px_100px_0]" : "rounded-[150px_0_0_100px]"}`}>
-
-                <div className={`relative -left-full w-[200%] h-full bg-linear-to-r from-[#5c6bc0] to-[#512da8] text-white
-                transition-transform duration-700 ease-in-out ${active ? "translate-x-1/2" : "translate-x-0"}`}>
-
-                {/* Left panel — shown when active (welcome back) */}
-                    <div className={`absolute top-0 left-0 w-1/2 h-full flex flex-col items-center justify-center text-center px-8
-                    transition-all duration-700 ease-in-out ${active ? "translate-x-0" : "-translate-x-[200%]"}`}>
+            <div className={`max-md:hidden w-full h-full absolute top-0 overflow-hidden rounded-2xl before:rounded-[150px_150px_75px_75px] before:ease-in-out
+            before:content-[''] before:w-[300%] before:h-full before:absolute before:bg-linear-to-r before:from-[#5c6bc0] before:z-10
+            before:to-[#512da8] before:duration-800 ${active ? "before:left-[-250%]" : "before:left-[50%]"}`}>
+                
+                <div className={`absolute top-0 left-0 w-1/2 h-full flex flex-col items-center justify-center text-center px-8
+                transition-all duration-700 ease-in-out ${active ? "translate-x-0" : "-translate-x-[200%]"}  delay-200 z-10`}>
                         
                         <h1 className="text-2xl font-bold">Welcome Back!</h1>
 
@@ -53,18 +48,17 @@ export default function AuthPage() {
                     <GhostBtn onClick={() => setActive(false)}>Sign In</GhostBtn>
                 </div>
 
-                {/* Right panel — shown by default (hello friend) */}
-                    <div className={`absolute top-0 right-0 w-1/2 h-full flex flex-col items-center justify-center text-center px-8
-                    transition-all duration-700 ease-in-out ${active ? "translate-x-[200%]" : "translate-x-0"}`}>
-                        
-                        <h1 className="text-2xl font-bold">Ripple</h1>
-                        <p className="text-[14px] leading-5 tracking-[0.3px] my-5">
-                        Don't have an accoount? Register with your personal details to use all of site features
-                        </p>
+                <div className={`absolute top-0 right-0 w-1/2 h-full flex flex-col items-center justify-center text-center px-8 z-10
+                transition-all duration-700 ease-in-out ${active ? "translate-x-[200%]" : "translate-x-0"} delay-200`}>
+                    
+                    <h1 className="text-2xl font-bold">Ripple</h1>
+                    <p className="text-[14px] leading-5 tracking-[0.3px] my-5">
+                    Don't have an accoount? Register with your personal details to use all of site features
+                    </p>
 
-                        <GhostBtn onClick={() => setActive(true)}>Sign Up</GhostBtn>
-                    </div>
+                    <GhostBtn onClick={() => setActive(true)}>Sign Up</GhostBtn>
                 </div>
+            
             </div>
             
             </div>
@@ -72,6 +66,11 @@ export default function AuthPage() {
         </>
     );
 }
+
+
+/**
+
+ */
 
 /* ── Sub-components ── */
 

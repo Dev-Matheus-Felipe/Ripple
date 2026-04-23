@@ -22,11 +22,11 @@ export default function LoginForm({active, setActive} : {active: boolean, setAct
     }
 
     return (
-        <div className={`sign-in${active ? " sm:translate-x-full" : ""}
-         absolute inset-y-0 left-0 max-sm:w-full w-1/2 z-2 transition-all duration-700 ease-in-out`}>
+        <div className={`${active ? "md:translate-x-full" : ""}
+         absolute inset-y-0 left-0 max-md:w-full w-1/2 z-2 transition-all duration-200 delay-200 ease-in-out`}>
             <form
             onSubmit={handleSubmit(handleSubmitForm)}
-            className="bg-(--p-ll-background-color) h-full flex flex-col items-center justify-center px-10"
+            className="bg-(--p-ll-background-color) h-full flex flex-col items-center justify-center md:px-10 px-5"
             >
             <h1 className="text-[26px] font-bold text-(--s-text-color)">Sign In</h1>
 

@@ -14,17 +14,12 @@ export default async function Auth({
         return <AuthPage />;
 
 
-    /*
-    
     const user = await prisma.pendingUser.findUnique({
         where: { email: email }
     });
 
     if (!user) 
         return <AuthPage />; 
-
-    */
-    
 
     return <CodeVerification />;
 }
